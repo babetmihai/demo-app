@@ -1,0 +1,12 @@
+@import 'constants.module.scss';
+
+.circle {
+  opacity: .8;
+  cursor: pointer;
+  stroke: rgba($primary, .2);
+}
+
+.selected {
+  opacity: 1;
+  stroke: $primary;
+}

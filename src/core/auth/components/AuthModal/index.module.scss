@@ -1,0 +1,19 @@
+@import 'constants.module.scss';
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.photo {
+  height: 8rem;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 2px solid $border;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+}

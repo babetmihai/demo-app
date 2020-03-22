@@ -1,0 +1,29 @@
+@import 'constants.module.scss';
+
+.charts {
+  flex: 1;
+  height: 0; // flexbox workaround
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    flex: 1;
+    display: flex;
+  }
+
+  .chart {
+    flex: 1;
+    overflow: hidden;
+    padding: 5%;
+    max-height: 90vmin;
+
+    svg {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      overflow: visible;
+    }
+  }
+}
+
+

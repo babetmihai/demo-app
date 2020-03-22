@@ -1,0 +1,12 @@
+@import 'constants.module.scss';
+
+.circle {
+  cursor: pointer;
+  stroke: rgba($primary, .2);
+  transition: r $std-transition ease;
+}
+
+.selected {
+  opacity: 1;
+  stroke: rgba($primary, .6);
+}

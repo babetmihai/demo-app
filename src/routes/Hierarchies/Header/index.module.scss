@@ -1,0 +1,23 @@
+@import "constants.module.scss";
+
+.header {
+  padding: 0 1rem;
+  border-bottom: 1px solid $border;
+  display: flex;
+}
+
+.chartLink {
+  color: $primary;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  padding: 1rem 2rem;
+  text-transform: capitalize;
+}
+
+.activeChartLink {
+  border-bottom: 3px solid $secondary;
+  h3 {
+    font-weight: 900;
+  }
+}
+

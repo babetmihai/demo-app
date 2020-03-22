@@ -1,0 +1,22 @@
+ 
+@import "constants.module.scss";
+
+.header {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: .5rem 1rem;
+  align-items: center;
+  z-index: 1;
+
+  button {
+    flex: none;
+    margin: .2rem;
+  }
+}
+
+.slider {
+  width: 15rem;
+  cursor: pointer;
+  margin: .35rem;
+}

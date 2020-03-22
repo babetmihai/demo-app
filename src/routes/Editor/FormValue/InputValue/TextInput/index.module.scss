@@ -1,0 +1,15 @@
+@import "constants.module.scss";
+
+.textInput {
+  display: flex;
+  .initialValue {
+    word-break: break-all;
+    white-space: normal;
+  }
+}
+
+.inputButton {
+  flex: none;
+  margin: 0;
+  padding: 0 1rem;
+}

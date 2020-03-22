@@ -1,0 +1,39 @@
+@import 'constants.module.scss';
+
+.header {
+  flex: none;
+  position: sticky;
+  top: 0;
+  display: flex;
+  background: linear-gradient(to left, rgba($primary, .90), $primary);
+  padding: 0 1rem;
+  color: $background;
+}
+
+.left {
+  flex: auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: .9rem .3rem;
+
+  i {
+    font-size: 1.8rem;
+  }
+}
+
+.right {
+  flex: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: .5rem
+}
+
+.photo {
+  height: 2.6rem;
+  object-fit: contain;
+  cursor: pointer;
+  border-radius: 50%;
+}
+

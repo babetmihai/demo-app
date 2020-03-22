@@ -1,0 +1,33 @@
+
+@import 'constants.module.scss';
+
+.alerts {
+  z-index: 2000;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  padding-top: 1rem;
+}
+
+.alert {
+  width: $sm;
+  pointer-events: auto;
+  margin: .5rem;
+  padding: 0 .5rem;
+  display: flex;
+  align-items: center;
+}
+
+.close {
+  color: $primary;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+}

@@ -1,0 +1,11 @@
+@import 'constants.module.scss';
+
+.axisY {
+  text {
+    font-size: 1rem;
+  }
+
+  path {
+    transition: all $std-transition ease;
+  }
+}

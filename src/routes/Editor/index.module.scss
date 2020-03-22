@@ -1,0 +1,49 @@
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  padding: .5rem 1rem;
+
+  :global {
+    .form-control {
+      width: auto;
+      height: auto;
+      min-height: 2.5rem;
+      flex: initial;
+    }
+    textarea.form-control {
+      width: 200px;
+      resize: both;
+      max-width: 100%;
+    }
+    .form-control.is-invalid {
+      background-image: none;
+      padding-right: .75rem;
+    }
+
+    .invalid-feedback {
+      display: block;
+      margin-left: 1rem;
+      margin-top: -.3rem;
+    }
+  }
+}
+
+.header {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: .5rem;
+
+  button {
+    flex: none;
+    margin: .2rem;
+  }
+}
+
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
