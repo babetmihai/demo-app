@@ -18,6 +18,7 @@ export default class Label extends PureComponent {
     return (
       <div
         className={join(
+          'card',
           styles.label,
           isDragged && styles.dragged,
           isDragged && hasTarget && styles.nodrop
