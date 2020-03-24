@@ -15,11 +15,11 @@
   background-color: $background;
   border: 1px solid $border;
   border-radius: 4px;
+  cursor: grab;
 }
 
 .rows {
   flex: 1;
   display: flex;
   position: relative;
-  cursor: grab;
 }

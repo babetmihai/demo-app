@@ -73,7 +73,7 @@ export default class Item extends PureComponent {
         id: item.id,
         start: item.start + x,
         end: item.end + x,
-        row: Math.max(item.row + y, 0)
+        row: item.row + y
       })
     })
   }
@@ -88,8 +88,29 @@ export default class Item extends PureComponent {
         ...item,
         start: item.start + dragX,
         end: item.end + dragX,
-        row: Math.max(0, item.row + dragY)
+        row: item.row + dragY
       })
+    } else {
+      const diffEnd = Math.abs(target.end - item.start - dragX)
+      const diffStart = Math.abs(target.start - item.end - dragX)
+
+      if (diffEnd < diffStart) {
+        const newItem = {
+          ...item,
+          start: target.end + 1,
+          end: target.end + 1 + item.end - item.start,
+          row: item.row + dragY
+        }
+        if (!getTarget(newItem)) setItem(newItem)
+      } else {
+        const newItem = {
+          ...item,
+          start: target.start - 1 - item.end + item.start,
+          end: target.start - 1,
+          row: item.row + dragY
+        }
+        if (!getTarget(newItem)) setItem(newItem)
+      }
     }
 
     this.setState({
@@ -126,9 +147,7 @@ export default class Item extends PureComponent {
 
     if (item.end - newStart < 15 && dl < this.dl) {
       this.endDl = this.dl
-      this.setState({
-        target
-      })
+      this.setState({ target })
     } else if (target) {
       this.startDl = this.dl
       this.setState({

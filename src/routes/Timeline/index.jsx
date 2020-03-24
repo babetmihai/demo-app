@@ -15,7 +15,7 @@ import Item from './Item'
 import styles from './index.module.scss'
 
 class Timeline extends PureComponent {
-
+  contentNode
   state = {
     pos: 0,
     height: 0,
@@ -29,7 +29,7 @@ class Timeline extends PureComponent {
   }
 
   initState = () => {
-    const { width, height } = this.rowsRef.getBoundingClientRect()
+    const { width, height } = this.contentNode.getBoundingClientRect()
     this.setState({
       width, height
     })
@@ -68,23 +68,22 @@ class Timeline extends PureComponent {
           zoom={zoom}
           setTimeline={this.handleTimeline}
         />
-        <div className={styles.content}>
+        <div className={styles.content} ref={this.handleDrag}>
           <div
-            ref={this.handleRowsRef}
             className={styles.rows}
             style={{
               marginLeft: dx,
               marginTop: dy
             }}
           >
-            {this.rowsRef && visibleItems.map((item) => (
+            {this.contentNode && visibleItems.map((item) => (
               <Item
                 key={item.id}
                 pos={pos}
                 item={item}
                 itemHeight={itemHeight}
                 itemWidth={itemWidth}
-                dragContainer={this.rowsRef}
+                dragContainer={this.contentNode}
               />
             ))}
           </div>
@@ -98,10 +97,10 @@ class Timeline extends PureComponent {
     this.setState(state)
   }
 
-  handleRowsRef = (node) => {
-    this.rowsRef = node
-    if (this.rowsRef) {
-      d3.select(this.rowsRef)
+  handleDrag = (node) => {
+    this.contentNode = node
+    if (this.contentNode) {
+      d3.select(this.contentNode)
         .call(d3.drag()
           .on('drag', this.dragMove)
           .on('end', this.dragEnd)
@@ -113,7 +112,7 @@ class Timeline extends PureComponent {
     const { dx, dy } = this.state
     this.setState({
       dx: dx + d3.event.dx,
-      dy: Math.min(0, dy + d3.event.dy)
+      dy: dy + d3.event.dy
     })
   }
 
