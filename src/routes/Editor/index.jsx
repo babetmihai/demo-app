@@ -19,7 +19,7 @@ class FormComponent extends PureComponent {
   }
 }
 
-function Resolver({ value }) {
+function Resolver({ id, index, value }) {
   switch (true) {
     case (_.isPlainObject(value)): {
       return (
@@ -27,6 +27,7 @@ function Resolver({ value }) {
           {Object.keys(value).map((id) => (
             <Resolver
               key={id}
+              id={id}
               value={value[id]}
             />
           ))}
@@ -37,7 +38,12 @@ function Resolver({ value }) {
       return (
         <div>
           {Object.values(value).map((item, index) => (
-            <Resolver key={index} value={item} />
+            <Resolver
+              id={id}
+              index={index}
+              key={index}
+              value={item}
+            />
           ))}
         </div>
       )
@@ -45,6 +51,8 @@ function Resolver({ value }) {
     default: {
       return (
         <div>
+          {id}
+          {index}
           {value}
         </div>
       )
