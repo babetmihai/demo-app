@@ -5,6 +5,7 @@ import _ from 'lodash'
 import { selectEditor, initEditor, setValue } from './actions'
 import Page from 'layout/Page'
 import styles from './index.module.scss'
+import { t } from 'core/intl'
 
 const joinPath = (...args) => args
   .filter(arg => !_.isNil(arg))
@@ -39,7 +40,8 @@ function Resolver(props) {
   switch (true) {
     case (_.isPlainObject(value)): return <ObjectValue {...props} />
     case (_.isArray(value)): return <ArrayValue {...props} />
-    default: return <Input {...props} />
+    case (!_.isNil(value)): return <Input {...props} />
+    default: return null
   }
 }
 
@@ -54,7 +56,11 @@ function ObjectValue({ label, path, value, ...props }) {
           title=""
           variant="light"
         >
-          <Dropdown.Item href="#">Action</Dropdown.Item>
+          {path &&
+            <Dropdown.Item onClick={() => setValue({ path, value: undefined })}>
+              {t('delete')}
+            </Dropdown.Item>
+          }
           <Dropdown.Item href="#">Another action</Dropdown.Item>
           <Dropdown.Item href="#">Something else here</Dropdown.Item>
           <Dropdown.Divider />
@@ -87,7 +93,11 @@ function ArrayValue({ label, path, value, ...props }) {
           title=""
           variant="light"
         >
-          <Dropdown.Item href="#">Action</Dropdown.Item>
+          {path &&
+            <Dropdown.Item onClick={() => setValue({ path, value: undefined })}>
+              {t('delete')}
+            </Dropdown.Item>
+          }
           <Dropdown.Item href="#">Another action</Dropdown.Item>
           <Dropdown.Item href="#">Something else here</Dropdown.Item>
           <Dropdown.Divider />
@@ -146,7 +156,9 @@ class Input extends PureComponent {
           title=""
           variant="outline-info"
         >
-          <Dropdown.Item href="#">Action</Dropdown.Item>
+          <Dropdown.Item onClick={this.handleDelete}>
+            {t('delete')}
+          </Dropdown.Item>
           <Dropdown.Item href="#">Another action</Dropdown.Item>
           <Dropdown.Item href="#">Something else here</Dropdown.Item>
           <Dropdown.Divider />
@@ -154,6 +166,11 @@ class Input extends PureComponent {
         </DropdownButton>
       </InputGroup>
     )
+  }
+
+  handleDelete = () => {
+    const { path, onChange } = this.props
+    onChange({ path, value: undefined })
   }
 
   handleChange = (event) => {

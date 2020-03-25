@@ -1,7 +1,7 @@
 
 $primary: #24292e;
 $secondary: #e36209;;
-$error: #c33;
+$danger: #c33;
 $success: #28a745;
 $pending: #f1e05a;
 $background: #f6f8fa;
@@ -72,6 +72,6 @@ $std-transition: 250ms;
   primary: $primary;
   secondary: $secondary;
   success: $success;
-  error: $error;
+  danger: $danger;
   border: $border;
 }
