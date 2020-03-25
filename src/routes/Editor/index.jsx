@@ -1,9 +1,14 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { Form, Card, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap'
 import _ from 'lodash'
 import store from 'store/actions'
 import Page from 'layout/Page'
 import styles from './index.module.scss'
+
+const joinPath = (...args) => args
+  .filter(arg => !_.isNil(arg))
+  .join('.')
 
 class FormComponent extends PureComponent {
 
@@ -13,63 +18,170 @@ class FormComponent extends PureComponent {
         loading={!value}
         className={styles.editor}
       >
-        <Resolver value={value} />
+        <Resolver
+          label="editor"
+          value={value}
+        />
       </Page>
     )
   }
 }
 
-function Resolver({ id, index, value }) {
+function Resolver({ label, path, value }) {
   switch (true) {
     case (_.isPlainObject(value)): {
       return (
-        <div>
-          {Object.keys(value).map((id) => (
-            <Resolver
-              key={id}
-              id={id}
-              value={value[id]}
-            />
-          ))}
-        </div>
+        <ObjectValue
+          label={label}
+          value={value}
+          path={path}
+        />
       )
     }
     case (_.isArray(value)): {
       return (
-        <div>
-          {Object.values(value).map((item, index) => (
-            <Resolver
-              id={id}
-              index={index}
-              key={index}
-              value={item}
-            />
-          ))}
-        </div>
+        <ArrayValue
+          label={label}
+          value={value}
+          path={path}
+        />
+      )
+    }
+    case (!!label): {
+      return (
+        <LabeledInput
+          label={label}
+          value={value}
+          path={path}
+        />
       )
     }
     default: {
       return (
-        <div>
-          {id}
-          {index}
-          {value}
-        </div>
+        <Input
+          label={label}
+          value={value}
+          path={path}
+        />
       )
     }
   }
 }
 
+function ObjectValue({ label, path, value }) {
+  return (
+    <Card className={styles.objectValue}>
+      <Card.Header className={styles.objectHeader}>
+        <i>folder_open</i>
+        <div className={styles.label}>{label}</div>
+      </Card.Header>
+      <div className={styles.content}>
+        {Object.keys(value).map((id) => (
+          <Resolver
+            key={id}
+            label={id}
+            path={joinPath(path, id)}
+            value={value[id]}
+          />
+        ))}
+      </div>
+    </Card>
+  )
+}
+
+function ArrayValue({ label, path, value }) {
+  return (
+    <Card className={styles.arrayValue}>
+      <Card.Header className={styles.arrayHeader}>
+        <i>format_list_bulleted</i>
+        <div className={styles.label}>{label}</div>
+        <DropdownButton
+          className={styles.dropdown}
+          as={InputGroup.Append}
+          title=""
+          variant="outline-primary"
+        >
+          <Dropdown.Item href="#">Action</Dropdown.Item>
+          <Dropdown.Item href="#">Another action</Dropdown.Item>
+          <Dropdown.Item href="#">Something else here</Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item href="#">Separated link</Dropdown.Item>
+        </DropdownButton>
+      </Card.Header>
+      <div className={styles.content}>
+        {Object.values(value).map((item, index) => (
+          <Resolver
+            key={index}
+            path={joinPath(path, index)}
+            value={item}
+          />
+        ))}
+      </div>
+    </Card>
+  )
+}
+
+function LabeledInput({ label, path, value }) {
+  return (
+    <InputGroup className={styles.labeledInput}>
+      <InputGroup.Prepend>
+        <InputGroup.Text>
+          {label}
+        </InputGroup.Text>
+      </InputGroup.Prepend>
+      <Form.Control value={value} onChange={() => console.log(path)} />
+      <DropdownButton
+        as={InputGroup.Append}
+        title=""
+        variant="outline-primary"
+      >
+        <Dropdown.Item href="#">Action</Dropdown.Item>
+        <Dropdown.Item href="#">Another action</Dropdown.Item>
+        <Dropdown.Item href="#">Something else here</Dropdown.Item>
+        <Dropdown.Divider />
+        <Dropdown.Item href="#">Separated link</Dropdown.Item>
+      </DropdownButton>
+    </InputGroup>
+  )
+}
+
+function Input({ label, path, value }) {
+  return (
+    <InputGroup className={styles.input}>
+      <Form.Control value={value} onChange={() => console.log(path)} />
+      <DropdownButton
+        as={InputGroup.Append}
+        title=""
+        variant="outline-primary"
+      >
+        <Dropdown.Item href="#">Action</Dropdown.Item>
+        <Dropdown.Item href="#">Another action</Dropdown.Item>
+        <Dropdown.Item href="#">Something else here</Dropdown.Item>
+        <Dropdown.Divider />
+        <Dropdown.Item href="#">Separated link</Dropdown.Item>
+      </DropdownButton>
+    </InputGroup>
+  )
+}
+
 export const value = {
   name: 'M34234',
-  age: 123,
+  other: [{ other: {} }],
+  age: [123, {}],
   email: [
     'test2@gmail.com',
     'test1@gmail.com'
   ],
   role: [
+    [
+      '1231',
+      234
+    ],
     'admin',
-    'user'
+    'user',
+    {
+      test: [1234, 234]
+    }
   ],
   section: {
     name: '123',
