@@ -328,7 +328,7 @@ class Input extends PureComponent {
         }
         <Form.Control
           value={value}
-          isValid={canRevert}
+          variant="secondary"
           onChange={this.handleChange}
         />
         <DropdownButton
