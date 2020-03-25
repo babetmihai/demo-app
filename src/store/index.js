@@ -9,7 +9,8 @@ import { DEFAULT_LOCALE } from 'core/intl'
 const AUTH_PATH = 'auth'
 const PERSISTENT_PATHS = [
   { path: AUTH_PATH, defaultValue: {} },
-  { path: 'intl.locale', defaultValue: DEFAULT_LOCALE }
+  { path: 'intl.locale', defaultValue: DEFAULT_LOCALE },
+  { path: 'editor', defaultValue: {} }
 ]
 
 const state = {}

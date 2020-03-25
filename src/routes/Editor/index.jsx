@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Form, Card, InputGroup, DropdownButton, Dropdown, Button } from 'react-bootstrap'
 import _ from 'lodash'
-import store from 'store/actions'
+import { selectEditor, initEditor, setValue } from './actions'
 import Page from 'layout/Page'
 import styles from './index.module.scss'
 
@@ -12,13 +12,20 @@ const joinPath = (...args) => args
 
 class FormComponent extends PureComponent {
 
+  componentDidMount() {
+    const { value } = this.props
+    if (!value) initEditor()
+  }
+
   render() {
+    const { value } = this.props
     return (
       <Page
         loading={!value}
         className={styles.editor}
       >
         <Resolver
+          onChange={setValue}
           label="editor"
           value={value}
         />
@@ -27,51 +34,19 @@ class FormComponent extends PureComponent {
   }
 }
 
-function Resolver({ label, path, value }) {
+function Resolver(props) {
+  const { value } = props
   switch (true) {
-    case (_.isPlainObject(value)): {
-      return (
-        <ObjectValue
-          label={label}
-          value={value}
-          path={path}
-        />
-      )
-    }
-    case (_.isArray(value)): {
-      return (
-        <ArrayValue
-          label={label}
-          value={value}
-          path={path}
-        />
-      )
-    }
-    case (!!label): {
-      return (
-        <LabeledInput
-          label={label}
-          value={value}
-          path={path}
-        />
-      )
-    }
-    default: {
-      return (
-        <Input
-          label={label}
-          value={value}
-          path={path}
-        />
-      )
-    }
+    case (_.isPlainObject(value)): return <ObjectValue {...props} />
+    case (_.isArray(value)): return <ArrayValue {...props} />
+    default: return <Input {...props} />
   }
 }
 
-function ObjectValue({ label, path, value }) {
+function ObjectValue({ label, path, value, ...props }) {
   return (
     <Card className={styles.objectValue}>
-      <Card.Header className={styles.objectHeader}>
+      <Card.Header className={styles.header}>
         <Button variant="light" className={styles.info}><i>folder_open</i></Button>
         <div className={styles.label}>{label}</div>
         <DropdownButton
@@ -89,6 +64,7 @@ function ObjectValue({ label, path, value }) {
       <div className={styles.content}>
         {Object.keys(value).map((id) => (
           <Resolver
+            {...props}
             key={id}
             label={id}
             path={joinPath(path, id)}
@@ -100,10 +76,10 @@ function ObjectValue({ label, path, value }) {
   )
 }
 
-function ArrayValue({ label, path, value }) {
+function ArrayValue({ label, path, value, ...props }) {
   return (
     <Card className={styles.arrayValue}>
-      <Card.Header className={styles.arrayHeader}>
+      <Card.Header className={styles.header}>
         <Button variant="light" className={styles.info}><i>format_list_bulleted</i></Button>
         <div className={styles.label}>{label}</div>
         <DropdownButton
@@ -121,6 +97,7 @@ function ArrayValue({ label, path, value }) {
       <div className={styles.content}>
         {Object.values(value).map((item, index) => (
           <Resolver
+            {...props}
             key={index}
             path={joinPath(path, index)}
             value={item}
@@ -131,77 +108,66 @@ function ArrayValue({ label, path, value }) {
   )
 }
 
-function LabeledInput({ label, path, value }) {
-  return (
-    <InputGroup className={styles.labeledInput}>
-      <InputGroup.Prepend>
-        <InputGroup.Text>
-          {label}
-        </InputGroup.Text>
-      </InputGroup.Prepend>
-      <Form.Control value={value} onChange={() => console.log(path)} />
-      <DropdownButton
-        className={styles.dropdown}
-        as={InputGroup.Append}
-        title=""
-        variant="outline-info"
-      >
-        <Dropdown.Item href="#">Action</Dropdown.Item>
-        <Dropdown.Item href="#">Another action</Dropdown.Item>
-        <Dropdown.Item href="#">Something else here</Dropdown.Item>
-        <Dropdown.Divider />
-        <Dropdown.Item href="#">Separated link</Dropdown.Item>
-      </DropdownButton>
-    </InputGroup>
-  )
-}
+class Input extends PureComponent {
 
-function Input({ label, path, value }) {
-  return (
-    <InputGroup className={styles.input}>
-      <Form.Control value={value} onChange={() => console.log(path)} />
-      <DropdownButton
-        className={styles.dropdown}
-        as={InputGroup.Append}
-        title=""
-        variant="outline-info"
-      >
-        <Dropdown.Item href="#">Action</Dropdown.Item>
-        <Dropdown.Item href="#">Another action</Dropdown.Item>
-        <Dropdown.Item href="#">Something else here</Dropdown.Item>
-        <Dropdown.Divider />
-        <Dropdown.Item href="#">Separated link</Dropdown.Item>
-      </DropdownButton>
-    </InputGroup>
-  )
-}
+  editing = false
+  state = { value: '' }
 
-export const value = {
-  name: 'M34234',
-  other: [{ other: {} }],
-  age: [123, {}],
-  email: [
-    'test2@gmail.com',
-    'test1@gmail.com'
-  ],
-  role: [
-    [
-      '1231',
-      234
-    ],
-    'admin',
-    'user',
-    {
-      test: [1234, 234]
-    }
-  ],
-  section: {
-    name: '123',
-    date: '2019-01-15',
-    price: '123',
-    weight: '123',
-    description: 'this is a textarea'
+  componentDidMount() {
+    const { value } = this.props
+    this.setState({ value })
+  }
+
+  componentDidUpdate() {
+    const { value } = this.props
+    if (!this.editing) this.setState({ value })
+  }
+
+  handleChange = (event) => {
+    const { path } = this.props
+    const newValue = event.target.value
+    this.editing = true
+    this.setState({ value: newValue }, () => this.setValue({ value: newValue, path }))
+  }
+
+  setValue = _.debounce((...args) => {
+    const { onChange } = this.props
+    onChange && onChange(...args)
+    this.editing = false
+  }, 700, { trailing: true })
+
+  render() {
+    const { label } = this.props
+    const { value } = this.state
+
+    return (
+      <InputGroup className={styles.input}>
+        {label &&
+          <InputGroup.Prepend>
+            <InputGroup.Text>
+              {label}
+            </InputGroup.Text>
+          </InputGroup.Prepend>
+        }
+        <Form.Control
+          value={value}
+          onChange={this.handleChange}
+        />
+        <DropdownButton
+          className={styles.dropdown}
+          as={InputGroup.Append}
+          title=""
+          variant="outline-info"
+        >
+          <Dropdown.Item href="#">Action</Dropdown.Item>
+          <Dropdown.Item href="#">Another action</Dropdown.Item>
+          <Dropdown.Item href="#">Something else here</Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item href="#">Separated link</Dropdown.Item>
+        </DropdownButton>
+      </InputGroup>
+    )
   }
 }
 
-export default connect(() => store.get('formData', {}))(FormComponent)
+export default connect(selectEditor)(FormComponent)

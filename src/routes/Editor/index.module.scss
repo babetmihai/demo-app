@@ -14,34 +14,6 @@
   min-width: 12rem;
   min-height: 6rem;
 
-  >.objectHeader {
-    padding: 0;
-    display: flex;
-
-    >.info {
-      padding: 0rem .5rem;
-      border-radius: 0;
-      border-top-left-radius: .25rem;
-      
-    }
-
-    >.label {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      padding: 0 .5rem;
-      border-right: 1px solid rgba(0, 0, 0, 0.125);
-      border-left: 1px solid rgba(0, 0, 0, 0.125);
-    }
-
-    >.dropdown {
-      >button {
-        border-radius: 0;
-        border-top-right-radius: .25rem;
-      }
-    }
-  }
-
   >.content {
     display: flex;
     flex-direction: column;
@@ -56,33 +28,6 @@
   min-width: 12rem;
   min-height: 6rem;
 
-  >.arrayHeader {
-    padding: 0;
-    display: flex;
-
-    >.info {
-      padding: 0 .5rem;
-      border-radius: 0;
-      border-top-left-radius: .25rem;
-    }
-
-    >.label {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      padding: 0 .5rem;
-      border-right: 1px solid rgba(0, 0, 0, 0.125);
-      border-left: 1px solid rgba(0, 0, 0, 0.125);
-    }
-
-    >.dropdown {
-      >button {
-        border-radius: 0;
-        border-top-right-radius: .25rem;
-      }
-    }
-  }
-
   >.content {
     display: flex;
     flex-wrap: wrap;
@@ -90,14 +35,30 @@
   }
 }
 
-.labeledInput {
-  align-self: flex-start;
+.header {
+  padding: 0;
   display: flex;
-  margin: .5rem;
-  width: auto;
+
+  >.info {
+    padding: 0rem .5rem;
+    border-radius: 0;
+    border-top-left-radius: .25rem;
+    
+  }
+
+  >.label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 .5rem;
+    border-right: 1px solid rgba(0, 0, 0, 0.125);
+    border-left: 1px solid rgba(0, 0, 0, 0.125);
+  }
+
   >.dropdown {
     >button {
-      color: $primary;
+      border-radius: 0;
+      border-top-right-radius: .25rem;
     }
   }
 }
