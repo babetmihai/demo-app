@@ -14,6 +14,18 @@ const swap = (array, i, j) => {
   return newArray
 }
 
+const TYPES = {
+  KEY: 'key',
+  OBJECT: 'object',
+  ARRAY: 'array'
+}
+
+const VALUES = {
+  [TYPES.KEY]: '',
+  [TYPES.OBJECT]: {},
+  [TYPES.ARRAY]: []
+}
+
 class FormComponent extends PureComponent {
 
   componentDidMount() {
@@ -81,7 +93,7 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
             </Dropdown.Item>
           }
           {!adding &&
-            <Dropdown.Item onClick={() => setAdding('key')}>
+            <Dropdown.Item onClick={() => setAdding(TYPES.KEY)}>
               {t('add.key')}
             </Dropdown.Item>
           }
@@ -138,19 +150,29 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
               className={styles.keySelect}
               onChange={(event) => setAdding(event.target.value)}
             >
-              <option value="key">{'key'}</option>
-              <option value="object">{'object'}</option>
-              <option value="array">{'array'}</option>
+              <option value={TYPES.KEY}>{TYPES.KEY}</option>
+              <option value={TYPES.ARRAY}>{TYPES.ARRAY}</option>
+              <option value={TYPES.OBJECT}>{TYPES.OBJECT}</option>
             </Form.Control>
 
             <InputGroup.Append>
               <Button
                 variant="outline-info"
                 className={styles.iconBtn}
+                onClick={() => {
+                  setNewKey('')
+                  setAdding(undefined)
+                }}
               >
                 <i>cancel</i>
               </Button>
               <Button
+                disabled={!newKey}
+                onClick={() => {
+                  setValue({ path: join(path, newKey), value: VALUES[adding] })
+                  setNewKey('')
+                  setAdding(undefined)
+                }}
                 variant="outline-info"
                 className={styles.iconBtn}
               >
@@ -165,6 +187,7 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
 }
 
 function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDown, ...props }) {
+  const [adding, setAdding] = React.useState()
   return (
     <Card className={styles.arrayValue}>
       <Card.Header className={styles.header}>
@@ -192,6 +215,11 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
               {t('move.down')}
             </Dropdown.Item>
           }
+          {!adding &&
+            <Dropdown.Item onClick={() => setAdding(TYPES.KEY)}>
+              {t('add.item')}
+            </Dropdown.Item>
+          }
           <Dropdown.Item href="#">Something else here</Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item href="#">Separated link</Dropdown.Item>
@@ -216,6 +244,40 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
             onDelete={() => setValue({ path, value: value.filter((i) => i !== item) })}
           />
         ))}
+        {adding &&
+          <InputGroup className={styles.newKey}>
+            <Form.Control
+              as="select"
+              value={adding}
+              className={styles.keySelect}
+              onChange={(event) => setAdding(event.target.value)}
+            >
+              <option value={TYPES.KEY}>{TYPES.KEY}</option>
+              <option value={TYPES.ARRAY}>{TYPES.ARRAY}</option>
+              <option value={TYPES.OBJECT}>{TYPES.OBJECT}</option>
+            </Form.Control>
+
+            <InputGroup.Append>
+              <Button
+                variant="outline-info"
+                className={styles.iconBtn}
+                onClick={() => setAdding(undefined)}
+              >
+                <i>cancel</i>
+              </Button>
+              <Button
+                onClick={() => {
+                  setValue({ path, value: [...value, VALUES[adding]] })
+                  setAdding(undefined)
+                }}
+                variant="outline-info"
+                className={styles.iconBtn}
+              >
+                <i>save</i>
+              </Button>
+            </InputGroup.Append>
+          </InputGroup>
+        }
       </div>
     </Card>
   )
