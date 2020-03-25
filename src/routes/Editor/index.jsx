@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { Form, Card, InputGroup, DropdownButton, Dropdown, Button } from 'react-bootstrap'
+import { Form, Card, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap'
 import _ from 'lodash'
 import store from 'store/actions'
 import Page from 'layout/Page'

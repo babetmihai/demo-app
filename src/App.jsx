@@ -11,36 +11,31 @@ const routes = [
     path: '/',
     component: lazy(() => import('routes/Home')),
     icon: 'home',
-    exact: true,
-    github: 'https://github.com/babetmihai/babet-mihai'
+    exact: true
   },
   {
     id: 'charts',
     path: '/charts',
     component: lazy(() => import('routes/Charts')),
-    icon: 'pie_chart',
-    github: 'https://github.com/babetmihai/babet-mihai/tree/master/src/routes/Charts'
+    icon: 'pie_chart'
   },
   {
     id: 'hierarchies',
     path: '/hierarchies',
     component: lazy(() => import('routes/Hierarchies')),
-    icon: 'bubble_chart',
-    github: 'https://github.com/babetmihai/babet-mihai/tree/master/src/routes/Hierarchies'
+    icon: 'bubble_chart'
   },
   {
     id: 'timeline',
     path: '/timeline',
     component: lazy(() => import('routes/Timeline')),
-    icon: 'view_list',
-    github: 'https://github.com/babetmihai/babet-mihai/tree/master/src/routes/Timeline'
+    icon: 'view_list'
   },
   {
     id: 'editor',
     path: '/editor',
     component: lazy(() => import('routes/Editor')),
-    icon: 'edit',
-    github: 'https://github.com/babetmihai/babet-mihai/tree/master/src/routes/Editor'
+    icon: 'edit'
   }
 ]
 
