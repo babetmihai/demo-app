@@ -1,6 +1,13 @@
 import actions from 'store/actions'
 import _ from 'lodash'
 
+export const swap = (array, i, j) => {
+  const newArray = [...array]
+  newArray[i] = array[j]
+  newArray[j] = array[i]
+  return newArray
+}
+
 export const join = (...args) => args
   .filter(arg => !_.isNil(arg))
   .join('.')

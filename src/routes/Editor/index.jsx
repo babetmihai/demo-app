@@ -2,17 +2,10 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Form, Card, InputGroup, DropdownButton, Dropdown, Button } from 'react-bootstrap'
 import _ from 'lodash'
-import { join, selectEditor, initEditor, setValue } from './actions'
+import { join, swap, selectEditor, initEditor, setValue } from './actions'
 import Page from 'layout/Page'
 import styles from './index.module.scss'
 import { t } from 'core/intl'
-
-const swap = (array, i, j) => {
-  const newArray = [...array]
-  newArray[i] = array[j]
-  newArray[j] = array[i]
-  return newArray
-}
 
 const TYPES = {
   INPUT: 'input',
