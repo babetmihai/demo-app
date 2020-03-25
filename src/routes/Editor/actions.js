@@ -42,7 +42,7 @@ const defaultValue = {
 
 export const initEditor = () => {
   actions.set('editor.value', defaultValue)
-  actions.set('editor.initialValue', _.cloneDeep(defaultValue))
+  actions.set('editor.initialValue', defaultValue)
 }
 export const selectEditor = () => actions.get('editor', {})
 
