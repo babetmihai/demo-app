@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Form, Card, InputGroup, DropdownButton, Dropdown, Button } from 'react-bootstrap'
 import _ from 'lodash'
-import { selectEditor, initEditor, setValue } from './actions'
+import { join, selectEditor, initEditor, setValue } from './actions'
 import Page from 'layout/Page'
 import styles from './index.module.scss'
 import { t } from 'core/intl'
@@ -13,9 +13,6 @@ const swap = (array, i, j) => {
   newArray[j] = array[i]
   return newArray
 }
-const joinPath = (...args) => args
-  .filter(arg => !_.isNil(arg))
-  .join('.')
 
 class FormComponent extends PureComponent {
 
@@ -92,9 +89,9 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
             {...props}
             key={id}
             label={id}
-            path={joinPath(path, id)}
+            path={join(path, id)}
             value={value[id]}
-            onDelete={() => setValue({ path: joinPath(path, id) })}
+            onDelete={() => setValue({ path: join(path, id) })}
             onMoveUp={index > 0
               ? () => setValue({
                 path,
@@ -109,7 +106,7 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
             onMoveDown={(index < Object.keys(value).length - 1)
               ? () => setValue({
                 path,
-                value: swap(Object.keys(value), index, index + 1)
+                value: swap(Object.keys(value), index + 1, index)
                   .reduce((acc, key) => {
                     acc[key] = value[key]
                     return acc
@@ -163,7 +160,7 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
           <Resolver
             {...props}
             key={index}
-            path={joinPath(path, index)}
+            path={join(path, index)}
             value={item}
             onMoveUp={index > 0
               ? () => setValue({ path, value: swap(value, index, index - 1) })

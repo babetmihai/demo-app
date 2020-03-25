@@ -1,4 +1,9 @@
 import actions from 'store/actions'
+import _ from 'lodash'
+
+export const join = (...args) => args
+  .filter(arg => !_.isNil(arg))
+  .join('.')
 
 const defaultValue = {
   name: 'M34234',
@@ -32,5 +37,5 @@ export const initEditor = () => actions.set('editor.value', defaultValue)
 export const selectEditor = () => actions.get('editor', {})
 
 export const setValue = ({ path, value }) => {
-  actions.set(`editor.value.${path}`, value)
+  actions.set(join('editor.value', path), value)
 }
