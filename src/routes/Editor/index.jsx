@@ -328,7 +328,7 @@ class Input extends PureComponent {
         </Dropdown.Item>
       ),
       onMoveDown && (
-        <Dropdown.Item key="'move.down" onClick={onMoveDown}>
+        <Dropdown.Item key="move.down" onClick={onMoveDown}>
           {t('move.down')}
         </Dropdown.Item>
       ),
