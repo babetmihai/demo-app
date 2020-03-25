@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { Form, Card, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap'
+import { Form, Card, InputGroup, DropdownButton, Dropdown, Button } from 'react-bootstrap'
 import _ from 'lodash'
 import store from 'store/actions'
 import Page from 'layout/Page'
@@ -72,7 +72,7 @@ function ObjectValue({ label, path, value }) {
   return (
     <Card className={styles.objectValue}>
       <Card.Header className={styles.objectHeader}>
-        <div className={styles.info}><i>folder_open</i></div>
+        <Button variant="light" className={styles.info}><i>folder_open</i></Button>
         <div className={styles.label}>{label}</div>
         <DropdownButton
           className={styles.dropdown}
@@ -104,7 +104,7 @@ function ArrayValue({ label, path, value }) {
   return (
     <Card className={styles.arrayValue}>
       <Card.Header className={styles.arrayHeader}>
-        <div className={styles.info}><i>format_list_bulleted</i></div>
+        <Button variant="light" className={styles.info}><i>format_list_bulleted</i></Button>
         <div className={styles.label}>{label}</div>
         <DropdownButton
           className={styles.dropdown}
