@@ -49,6 +49,8 @@ function Resolver(props) {
 }
 
 function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDown, ...props }) {
+  const keys = Object.keys(value)
+
   return (
     <Card className={styles.objectValue}>
       <Card.Header className={styles.header}>
@@ -84,7 +86,7 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
         </DropdownButton>
       </Card.Header>
       <div className={styles.content}>
-        {Object.keys(value).map((id, index) => (
+        {keys.map((id, index) => (
           <Resolver
             {...props}
             key={id}
@@ -95,7 +97,7 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
             onMoveUp={index > 0
               ? () => setValue({
                 path,
-                value: swap(Object.keys(value), index, index - 1)
+                value: swap(keys, index, index - 1)
                   .reduce((acc, key) => {
                     acc[key] = value[key]
                     return acc
@@ -103,10 +105,10 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
               })
               : undefined
             }
-            onMoveDown={(index < Object.keys(value).length - 1)
+            onMoveDown={(index < keys.length - 1)
               ? () => setValue({
                 path,
-                value: swap(Object.keys(value), index + 1, index)
+                value: swap(keys, index + 1, index)
                   .reduce((acc, key) => {
                     acc[key] = value[key]
                     return acc
