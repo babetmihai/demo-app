@@ -136,7 +136,7 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
         {adding &&
           <InputGroup className={styles.newKey}>
             <Form.Control
-              autoFocus
+              ref={(node) => node && setTimeout(() => node.focus())}
               value={newKey}
               className={styles.keyInput}
               onChange={(event) => setNewKey(event.target.value)}
@@ -244,6 +244,7 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
           <InputGroup className={styles.newKey}>
             <Form.Control
               as="select"
+              ref={(node) => node && setTimeout(() => node.focus())}
               value={adding}
               className={styles.keySelect}
               onChange={(event) => setAdding(event.target.value)}
