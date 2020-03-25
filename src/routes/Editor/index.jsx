@@ -66,6 +66,32 @@ function ObjectValue({ label, path, value, initialValue, onDelete, onChange, onM
   const [adding, setAdding] = React.useState()
   const [newKey, setNewKey] = React.useState('')
   const canRevert = !_.isNil(initialValue) && initialValue !== value
+  const options = [
+    onDelete && ( <Dropdown.Item key="delete" onClick={onDelete}>
+      {t('delete')}
+    </Dropdown.Item>
+    ),
+    onMoveUp && (
+      <Dropdown.Item key="move.up" onClick={onMoveUp}>
+        {t('move.up')}
+      </Dropdown.Item>
+    ),
+    onMoveDown && (
+      <Dropdown.Item key="move.down" onClick={onMoveDown}>
+        {t('move.down')}
+      </Dropdown.Item>
+    ),
+    !adding && (
+      <Dropdown.Item key="add.item" onClick={() => setAdding(TYPES.INPUT)}>
+        {t('add.item')}
+      </Dropdown.Item>
+    ),
+    canRevert && (
+      <Dropdown.Item key="revert" onClick={() => onChange({ path, value: initialValue })}>
+        {t('revert')}
+      </Dropdown.Item>
+    )
+  ].filter(Boolean)
 
   return (
     <Card className={styles.objectValue}>
@@ -75,35 +101,12 @@ function ObjectValue({ label, path, value, initialValue, onDelete, onChange, onM
         </Button>
         <div className={styles.label}>{label}</div>
         <DropdownButton
+          disabled={options.length === 0}
           className={styles.dropdown}
           title=""
           variant="light"
         >
-          {onDelete &&
-            <Dropdown.Item onClick={onDelete}>
-              {t('delete')}
-            </Dropdown.Item>
-          }
-          {onMoveUp &&
-            <Dropdown.Item onClick={onMoveUp}>
-              {t('move.up')}
-            </Dropdown.Item>
-          }
-          {onMoveDown &&
-            <Dropdown.Item onClick={onMoveDown}>
-              {t('move.down')}
-            </Dropdown.Item>
-          }
-          {!adding &&
-            <Dropdown.Item onClick={() => setAdding(TYPES.INPUT)}>
-              {t('add.key')}
-            </Dropdown.Item>
-          }
-          {canRevert &&
-            <Dropdown.Item onClick={() => onChange({ path, value: initialValue })}>
-              {t('revert')}
-            </Dropdown.Item>
-          }
+          {options}
         </DropdownButton>
       </Card.Header>
       <div className={styles.content}>
@@ -196,6 +199,33 @@ function ObjectValue({ label, path, value, initialValue, onDelete, onChange, onM
 function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDown, initialValue, ...props }) {
   const [adding, setAdding] = React.useState()
   const canRevert = !_.isNil(initialValue) && initialValue !== value
+  const options = [
+    onDelete && ( <Dropdown.Item key="delete" onClick={onDelete}>
+      {t('delete')}
+    </Dropdown.Item>
+    ),
+    onMoveUp && (
+      <Dropdown.Item key="move.up" onClick={onMoveUp}>
+        {t('move.up')}
+      </Dropdown.Item>
+    ),
+    onMoveDown && (
+      <Dropdown.Item key="move.down" onClick={onMoveDown}>
+        {t('move.down')}
+      </Dropdown.Item>
+    ),
+    !adding && (
+      <Dropdown.Item key="add.item" onClick={() => setAdding(TYPES.INPUT)}>
+        {t('add.item')}
+      </Dropdown.Item>
+    ),
+    canRevert && (
+      <Dropdown.Item key="revert" onClick={() => onChange({ path, value: initialValue })}>
+        {t('revert')}
+      </Dropdown.Item>
+    )
+  ].filter(Boolean)
+
   return (
     <Card className={styles.arrayValue}>
       <Card.Header className={styles.header}>
@@ -204,35 +234,12 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
         </Button>
         <div className={styles.label}>{label}</div>
         <DropdownButton
+          disabled={options.length === 0}
           className={styles.dropdown}
           title=""
           variant="light"
         >
-          {onDelete &&
-            <Dropdown.Item onClick={onDelete}>
-              {t('delete')}
-            </Dropdown.Item>
-          }
-          {onMoveUp &&
-            <Dropdown.Item onClick={onMoveUp}>
-              {t('move.up')}
-            </Dropdown.Item>
-          }
-          {onMoveDown &&
-            <Dropdown.Item onClick={onMoveDown}>
-              {t('move.down')}
-            </Dropdown.Item>
-          }
-          {!adding &&
-            <Dropdown.Item onClick={() => setAdding(TYPES.INPUT)}>
-              {t('add.item')}
-            </Dropdown.Item>
-          }
-          {canRevert &&
-            <Dropdown.Item onClick={() => onChange({ path, value: initialValue })}>
-              {t('revert')}
-            </Dropdown.Item>
-          }
+          {options}
         </DropdownButton>
       </Card.Header>
       <div className={styles.content}>
@@ -270,7 +277,6 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
                 </option>
               ))}
             </Form.Control>
-
             <InputGroup.Append>
               <Button
                 variant="outline-info"
@@ -316,6 +322,28 @@ class Input extends PureComponent {
     const { label, initialValue, onDelete, onMoveUp, onMoveDown } = this.props
     const { value } = this.state
     const canRevert = (!_.isNil(initialValue) && initialValue !== value)
+    const options = [
+      onDelete && (
+        <Dropdown.Item key="delete" onClick={onDelete}>
+          {t('delete')}
+        </Dropdown.Item>
+      ),
+      onMoveUp && (
+        <Dropdown.Item key="move.up" onClick={onMoveUp}>
+          {t('move.up')}
+        </Dropdown.Item>
+      ),
+      onMoveDown && (
+        <Dropdown.Item key="'move.down" onClick={onMoveDown}>
+          {t('move.down')}
+        </Dropdown.Item>
+      ),
+      canRevert && (
+        <Dropdown.Item key="revert" onClick={this.handleRevert}>
+          {t('revert')}
+        </Dropdown.Item>
+      )
+    ].filter(Boolean)
 
     return (
       <InputGroup className={styles.input}>
@@ -332,31 +360,13 @@ class Input extends PureComponent {
           onChange={this.handleChange}
         />
         <DropdownButton
+          disabled={options.length === 0}
           className={styles.dropdown}
           as={InputGroup.Append}
           title=""
           variant="outline-info"
         >
-          {onDelete &&
-            <Dropdown.Item onClick={onDelete}>
-              {t('delete')}
-            </Dropdown.Item>
-          }
-          {onMoveUp &&
-            <Dropdown.Item onClick={onMoveUp}>
-              {t('move.up')}
-            </Dropdown.Item>
-          }
-          {onMoveDown &&
-            <Dropdown.Item onClick={onMoveDown}>
-              {t('move.down')}
-            </Dropdown.Item>
-          }
-          {canRevert &&
-            <Dropdown.Item onClick={this.handleRevert}>
-              {t('revert')}
-            </Dropdown.Item>
-          }
+          {options}
         </DropdownButton>
       </InputGroup>
     )
