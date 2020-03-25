@@ -7,6 +7,12 @@ import Page from 'layout/Page'
 import styles from './index.module.scss'
 import { t } from 'core/intl'
 
+const swap = (array, i, j) => {
+  const newArray = [...array]
+  newArray[i] = array[j]
+  newArray[j] = array[i]
+  return newArray
+}
 const joinPath = (...args) => args
   .filter(arg => !_.isNil(arg))
   .join('.')
@@ -45,11 +51,13 @@ function Resolver(props) {
   }
 }
 
-function ObjectValue({ label, path, value, onDelete, onChange, ...props }) {
+function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDown, ...props }) {
   return (
     <Card className={styles.objectValue}>
       <Card.Header className={styles.header}>
-        <Button variant="light" className={styles.info}><i>folder_open</i></Button>
+        <Button variant="light" className={styles.info}>
+          <i>folder_open</i>
+        </Button>
         <div className={styles.label}>{label}</div>
         <DropdownButton
           className={styles.dropdown}
@@ -63,14 +71,23 @@ function ObjectValue({ label, path, value, onDelete, onChange, ...props }) {
               {t('delete')}
             </Dropdown.Item>
           }
-          <Dropdown.Item href="#">Another action</Dropdown.Item>
+          {onMoveUp &&
+            <Dropdown.Item onClick={onMoveUp}>
+              {t('move.up')}
+            </Dropdown.Item>
+          }
+          {onMoveDown &&
+            <Dropdown.Item onClick={onMoveDown}>
+              {t('move.down')}
+            </Dropdown.Item>
+          }
           <Dropdown.Item href="#">Something else here</Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item href="#">Separated link</Dropdown.Item>
         </DropdownButton>
       </Card.Header>
       <div className={styles.content}>
-        {Object.keys(value).map((id) => (
+        {Object.keys(value).map((id, index) => (
           <Resolver
             {...props}
             key={id}
@@ -78,6 +95,28 @@ function ObjectValue({ label, path, value, onDelete, onChange, ...props }) {
             path={joinPath(path, id)}
             value={value[id]}
             onDelete={() => setValue({ path: joinPath(path, id) })}
+            onMoveUp={index > 0
+              ? () => setValue({
+                path,
+                value: swap(Object.keys(value), index, index - 1)
+                  .reduce((acc, key) => {
+                    acc[key] = value[key]
+                    return acc
+                  }, {})
+              })
+              : undefined
+            }
+            onMoveDown={(index < Object.keys(value).length - 1)
+              ? () => setValue({
+                path,
+                value: swap(Object.keys(value), index, index + 1)
+                  .reduce((acc, key) => {
+                    acc[key] = value[key]
+                    return acc
+                  }, {})
+              })
+              : undefined
+            }
             onChange={onChange}
           />
         ))}
@@ -86,35 +125,54 @@ function ObjectValue({ label, path, value, onDelete, onChange, ...props }) {
   )
 }
 
-function ArrayValue({ label, path, value, onDelete, onChange, ...props }) {
+function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDown, ...props }) {
   return (
     <Card className={styles.arrayValue}>
       <Card.Header className={styles.header}>
-        <Button variant="light" className={styles.info}><i>format_list_bulleted</i></Button>
+        <Button variant="light" className={styles.info}>
+          <i>format_list_bulleted</i>
+        </Button>
         <div className={styles.label}>{label}</div>
         <DropdownButton
           className={styles.dropdown}
           title=""
           variant="light"
         >
-          {path &&
+          {onDelete &&
             <Dropdown.Item onClick={onDelete}>
               {t('delete')}
             </Dropdown.Item>
           }
-          <Dropdown.Item href="#">Another action</Dropdown.Item>
+          {onMoveUp &&
+            <Dropdown.Item onClick={onMoveUp}>
+              {t('move.up')}
+            </Dropdown.Item>
+          }
+          {onMoveDown &&
+            <Dropdown.Item onClick={onMoveDown}>
+              {t('move.down')}
+            </Dropdown.Item>
+          }
           <Dropdown.Item href="#">Something else here</Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item href="#">Separated link</Dropdown.Item>
         </DropdownButton>
       </Card.Header>
       <div className={styles.content}>
-        {Object.values(value).map((item, index) => (
+        {value.map((item, index) => (
           <Resolver
             {...props}
             key={index}
             path={joinPath(path, index)}
             value={item}
+            onMoveUp={index > 0
+              ? () => setValue({ path, value: swap(value, index, index - 1) })
+              : undefined
+            }
+            onMoveDown={(index < value.length - 1)
+              ? () => setValue({ path, value: swap(value, index, index + 1) })
+              : undefined
+            }
             onChange={onChange}
             onDelete={() => setValue({ path, value: value.filter((i) => i !== item) })}
           />
@@ -140,7 +198,7 @@ class Input extends PureComponent {
   }
 
   render() {
-    const { label, onDelete } = this.props
+    const { label, onDelete, onMoveUp, onMoveDown } = this.props
     const { value } = this.state
 
     return (
@@ -167,7 +225,16 @@ class Input extends PureComponent {
               {t('delete')}
             </Dropdown.Item>
           }
-          <Dropdown.Item href="#">Another action</Dropdown.Item>
+          {onMoveUp &&
+            <Dropdown.Item onClick={onMoveUp}>
+              {t('move.up')}
+            </Dropdown.Item>
+          }
+          {onMoveDown &&
+            <Dropdown.Item onClick={onMoveDown}>
+              {t('move.down')}
+            </Dropdown.Item>
+          }
           <Dropdown.Item href="#">Something else here</Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item href="#">Separated link</Dropdown.Item>
