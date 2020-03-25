@@ -112,9 +112,9 @@ function ObjectValue({ label, path, value, initialValue, onDelete, onChange, onM
             path={join(path, id)}
             value={_.get(value, id)}
             initialValue={_.get(initialValue, id)}
-            onDelete={() => setValue({ path: join(path, id) })}
+            onDelete={() => onChange({ path: join(path, id) })}
             onMoveUp={index > 0
-              ? () => setValue({
+              ? () => onChange({
                 path,
                 value: swap(keys, index, index - 1)
                   .reduce((acc, key) => {
@@ -125,7 +125,7 @@ function ObjectValue({ label, path, value, initialValue, onDelete, onChange, onM
               : undefined
             }
             onMoveDown={(index < keys.length - 1)
-              ? () => setValue({
+              ? () => onChange({
                 path,
                 value: swap(keys, index + 1, index)
                   .reduce((acc, key) => {
@@ -172,7 +172,7 @@ function ObjectValue({ label, path, value, initialValue, onDelete, onChange, onM
               <Button
                 disabled={!newKey}
                 onClick={() => {
-                  setValue({ path: join(path, newKey), value: VALUES[adding] })
+                  onChange({ path: join(path, newKey), value: VALUES[adding] })
                   setNewKey('')
                   setAdding(undefined)
                 }}
@@ -245,15 +245,15 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
             value={item}
             initialValue={_.get(initialValue, index)}
             onMoveUp={index > 0
-              ? () => setValue({ path, value: swap(value, index, index - 1) })
+              ? () => onChange({ path, value: swap(value, index, index - 1) })
               : undefined
             }
             onMoveDown={(index < value.length - 1)
-              ? () => setValue({ path, value: swap(value, index, index + 1) })
+              ? () => onChange({ path, value: swap(value, index, index + 1) })
               : undefined
             }
             onChange={onChange}
-            onDelete={() => setValue({ path, value: value.filter((i) => i !== item) })}
+            onDelete={() => onChange({ path, value: value.filter((i) => i !== item) })}
           />
         ))}
         {adding &&
@@ -281,7 +281,7 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
               </Button>
               <Button
                 onClick={() => {
-                  setValue({ path, value: [...value, VALUES[adding]] })
+                  onChange({ path, value: [...value, VALUES[adding]] })
                   setAdding(undefined)
                 }}
                 variant="outline-info"
