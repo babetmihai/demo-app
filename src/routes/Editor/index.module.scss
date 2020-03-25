@@ -24,7 +24,6 @@
     }
 
     >.dropdown {
-      margin: -1px;
       >button {
         border-radius: 0;
         border-top-right-radius: .25rem;
@@ -56,7 +55,6 @@
     }
 
     >.dropdown {
-      margin: -1px;
       >button {
         border-radius: 0;
         border-top-right-radius: .25rem;
@@ -76,6 +74,11 @@
   display: flex;
   margin: .5rem;
   width: auto;
+  >.dropdown {
+    >button {
+      color: $primary;
+    }
+  }
 }
 
 .input {
@@ -83,4 +86,9 @@
   display: flex;
   margin: .5rem;
   width: auto;
+  >.dropdown {
+    >button {
+      color: $primary;
+    }
+  }
 }

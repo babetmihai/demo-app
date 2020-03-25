@@ -77,7 +77,7 @@ function ObjectValue({ label, path, value }) {
         <DropdownButton
           className={styles.dropdown}
           title=""
-          variant="outline-primary"
+          variant="light"
         >
           <Dropdown.Item href="#">Action</Dropdown.Item>
           <Dropdown.Item href="#">Another action</Dropdown.Item>
@@ -109,7 +109,7 @@ function ArrayValue({ label, path, value }) {
         <DropdownButton
           className={styles.dropdown}
           title=""
-          variant="outline-primary"
+          variant="light"
         >
           <Dropdown.Item href="#">Action</Dropdown.Item>
           <Dropdown.Item href="#">Another action</Dropdown.Item>
@@ -141,9 +141,10 @@ function LabeledInput({ label, path, value }) {
       </InputGroup.Prepend>
       <Form.Control value={value} onChange={() => console.log(path)} />
       <DropdownButton
+        className={styles.dropdown}
         as={InputGroup.Append}
         title=""
-        variant="outline-primary"
+        variant="outline-info"
       >
         <Dropdown.Item href="#">Action</Dropdown.Item>
         <Dropdown.Item href="#">Another action</Dropdown.Item>
@@ -160,9 +161,10 @@ function Input({ label, path, value }) {
     <InputGroup className={styles.input}>
       <Form.Control value={value} onChange={() => console.log(path)} />
       <DropdownButton
+        className={styles.dropdown}
         as={InputGroup.Append}
         title=""
-        variant="outline-primary"
+        variant="outline-info"
       >
         <Dropdown.Item href="#">Action</Dropdown.Item>
         <Dropdown.Item href="#">Another action</Dropdown.Item>
