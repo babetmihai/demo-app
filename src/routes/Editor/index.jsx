@@ -45,7 +45,7 @@ function Resolver(props) {
   }
 }
 
-function ObjectValue({ label, path, value, ...props }) {
+function ObjectValue({ label, path, value, onDelete, onChange, ...props }) {
   return (
     <Card className={styles.objectValue}>
       <Card.Header className={styles.header}>
@@ -57,7 +57,15 @@ function ObjectValue({ label, path, value, ...props }) {
           variant="light"
         >
           {path &&
-            <Dropdown.Item onClick={() => setValue({ path, value: undefined })}>
+            <Dropdown.Item
+              onClick={() => {
+                if (onDelete) {
+                  onDelete()
+                } else {
+                  onChange({ path, value: undefined })
+                }
+              }}
+            >
               {t('delete')}
             </Dropdown.Item>
           }
@@ -75,6 +83,7 @@ function ObjectValue({ label, path, value, ...props }) {
             label={id}
             path={joinPath(path, id)}
             value={value[id]}
+            onChange={onChange}
           />
         ))}
       </div>
@@ -82,7 +91,7 @@ function ObjectValue({ label, path, value, ...props }) {
   )
 }
 
-function ArrayValue({ label, path, value, ...props }) {
+function ArrayValue({ label, path, value, onDelete, onChange, ...props }) {
   return (
     <Card className={styles.arrayValue}>
       <Card.Header className={styles.header}>
@@ -94,7 +103,15 @@ function ArrayValue({ label, path, value, ...props }) {
           variant="light"
         >
           {path &&
-            <Dropdown.Item onClick={() => setValue({ path, value: undefined })}>
+            <Dropdown.Item
+              onClick={() => {
+                if (onDelete) {
+                  onDelete()
+                } else {
+                  onChange({ path, value: undefined })
+                }
+              }}
+            >
               {t('delete')}
             </Dropdown.Item>
           }
@@ -111,6 +128,8 @@ function ArrayValue({ label, path, value, ...props }) {
             key={index}
             path={joinPath(path, index)}
             value={item}
+            onChange={onChange}
+            onDelete={() => setValue({ path, value: value.filter((i) => i !== item) })}
           />
         ))}
       </div>
@@ -169,8 +188,12 @@ class Input extends PureComponent {
   }
 
   handleDelete = () => {
-    const { path, onChange } = this.props
-    onChange({ path, value: undefined })
+    const { path, onChange, onDelete } = this.props
+    if (onDelete) {
+      onDelete()
+    } else {
+      onChange({ path, value: undefined })
+    }
   }
 
   handleChange = (event) => {
