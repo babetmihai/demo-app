@@ -65,6 +65,7 @@ function ObjectValue({ label, path, value, initialValue, onDelete, onChange, onM
   const keys = Object.keys(value)
   const [adding, setAdding] = React.useState()
   const [newKey, setNewKey] = React.useState('')
+  const canRevert = !_.isNil(initialValue) && initialValue !== value
 
   return (
     <Card className={styles.objectValue}>
@@ -98,7 +99,7 @@ function ObjectValue({ label, path, value, initialValue, onDelete, onChange, onM
               {t('add.key')}
             </Dropdown.Item>
           }
-          {(!_.isNil(initialValue) && initialValue !== value) &&
+          {canRevert &&
             <Dropdown.Item onClick={() => setValue({ path, value: initialValue })}>
               {t('revert')}
             </Dropdown.Item>
@@ -194,6 +195,7 @@ function ObjectValue({ label, path, value, initialValue, onDelete, onChange, onM
 
 function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDown, initialValue, ...props }) {
   const [adding, setAdding] = React.useState()
+  const canRevert = !_.isNil(initialValue) && initialValue !== value
   return (
     <Card className={styles.arrayValue}>
       <Card.Header className={styles.header}>
@@ -226,7 +228,7 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
               {t('add.item')}
             </Dropdown.Item>
           }
-          {(!_.isNil(initialValue) && initialValue !== value) &&
+          {canRevert &&
             <Dropdown.Item onClick={() => setValue({ path, value: initialValue })}>
               {t('revert')}
             </Dropdown.Item>
@@ -240,7 +242,7 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
             key={index}
             path={join(path, index)}
             value={item}
-            initialValue={_.get(value, index)}
+            initialValue={_.get(initialValue, index)}
             onMoveUp={index > 0
               ? () => setValue({ path, value: swap(value, index, index - 1) })
               : undefined
@@ -313,6 +315,7 @@ class Input extends PureComponent {
   render() {
     const { label, initialValue, path, onDelete, onMoveUp, onMoveDown } = this.props
     const { value } = this.state
+    const canRevert = (!_.isNil(initialValue) && initialValue !== value)
 
     return (
       <InputGroup className={styles.input}>
@@ -325,6 +328,7 @@ class Input extends PureComponent {
         }
         <Form.Control
           value={value}
+          isValid={canRevert}
           onChange={this.handleChange}
         />
         <DropdownButton
@@ -348,7 +352,7 @@ class Input extends PureComponent {
               {t('move.down')}
             </Dropdown.Item>
           }
-          {(!_.isNil(initialValue) && initialValue !== value) &&
+          {canRevert &&
             <Dropdown.Item onClick={() => setValue({ path, value: initialValue })}>
               {t('revert')}
             </Dropdown.Item>
