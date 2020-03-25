@@ -15,13 +15,13 @@ const swap = (array, i, j) => {
 }
 
 const TYPES = {
-  KEY: 'key',
+  INPUT: 'input',
   OBJECT: 'object',
   ARRAY: 'array'
 }
 
 const VALUES = {
-  [TYPES.KEY]: '',
+  [TYPES.INPUT]: '',
   [TYPES.OBJECT]: {},
   [TYPES.ARRAY]: []
 }
@@ -93,13 +93,10 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
             </Dropdown.Item>
           }
           {!adding &&
-            <Dropdown.Item onClick={() => setAdding(TYPES.KEY)}>
+            <Dropdown.Item onClick={() => setAdding(TYPES.INPUT)}>
               {t('add.key')}
             </Dropdown.Item>
           }
-          <Dropdown.Item href="#">Something else here</Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item href="#">Separated link</Dropdown.Item>
         </DropdownButton>
       </Card.Header>
       <div className={styles.content}>
@@ -150,9 +147,11 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
               className={styles.keySelect}
               onChange={(event) => setAdding(event.target.value)}
             >
-              <option value={TYPES.KEY}>{TYPES.KEY}</option>
-              <option value={TYPES.ARRAY}>{TYPES.ARRAY}</option>
-              <option value={TYPES.OBJECT}>{TYPES.OBJECT}</option>
+              {Object.values(TYPES).map((type) => (
+                <option key={type} value={type}>
+                  {t(type)}
+                </option>
+              ))}
             </Form.Control>
 
             <InputGroup.Append>
@@ -216,13 +215,10 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
             </Dropdown.Item>
           }
           {!adding &&
-            <Dropdown.Item onClick={() => setAdding(TYPES.KEY)}>
+            <Dropdown.Item onClick={() => setAdding(TYPES.INPUT)}>
               {t('add.item')}
             </Dropdown.Item>
           }
-          <Dropdown.Item href="#">Something else here</Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item href="#">Separated link</Dropdown.Item>
         </DropdownButton>
       </Card.Header>
       <div className={styles.content}>
@@ -252,9 +248,11 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
               className={styles.keySelect}
               onChange={(event) => setAdding(event.target.value)}
             >
-              <option value={TYPES.KEY}>{TYPES.KEY}</option>
-              <option value={TYPES.ARRAY}>{TYPES.ARRAY}</option>
-              <option value={TYPES.OBJECT}>{TYPES.OBJECT}</option>
+              {Object.values(TYPES).map((type) => (
+                <option key={type} value={type}>
+                  {t(type)}
+                </option>
+              ))}
             </Form.Control>
 
             <InputGroup.Append>
@@ -336,9 +334,6 @@ class Input extends PureComponent {
               {t('move.down')}
             </Dropdown.Item>
           }
-          <Dropdown.Item href="#">Something else here</Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item href="#">Separated link</Dropdown.Item>
         </DropdownButton>
       </InputGroup>
     )
