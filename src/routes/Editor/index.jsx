@@ -123,19 +123,6 @@ class Input extends PureComponent {
     if (!this.editing) this.setState({ value })
   }
 
-  handleChange = (event) => {
-    const { path } = this.props
-    const newValue = event.target.value
-    this.editing = true
-    this.setState({ value: newValue }, () => this.setValue({ value: newValue, path }))
-  }
-
-  setValue = _.debounce((...args) => {
-    const { onChange } = this.props
-    onChange && onChange(...args)
-    this.editing = false
-  }, 700, { trailing: true })
-
   render() {
     const { label } = this.props
     const { value } = this.state
@@ -168,6 +155,19 @@ class Input extends PureComponent {
       </InputGroup>
     )
   }
+
+  handleChange = (event) => {
+    const { path } = this.props
+    const newValue = event.target.value
+    this.editing = true
+    this.setState({ value: newValue }, () => this.setValue({ value: newValue, path }))
+  }
+
+  setValue = _.debounce((...args) => {
+    const { onChange } = this.props
+    onChange && onChange(...args)
+    this.editing = false
+  }, 700, { trailing: true })
 }
 
 export default connect(selectEditor)(FormComponent)
