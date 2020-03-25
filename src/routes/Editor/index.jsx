@@ -100,7 +100,7 @@ function ObjectValue({ label, path, value, initialValue, onDelete, onChange, onM
             </Dropdown.Item>
           }
           {canRevert &&
-            <Dropdown.Item onClick={() => setValue({ path, value: initialValue })}>
+            <Dropdown.Item onClick={() => onChange({ path, value: initialValue })}>
               {t('revert')}
             </Dropdown.Item>
           }
@@ -229,7 +229,7 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
             </Dropdown.Item>
           }
           {canRevert &&
-            <Dropdown.Item onClick={() => setValue({ path, value: initialValue })}>
+            <Dropdown.Item onClick={() => onChange({ path, value: initialValue })}>
               {t('revert')}
             </Dropdown.Item>
           }
@@ -313,7 +313,7 @@ class Input extends PureComponent {
   }
 
   render() {
-    const { label, initialValue, path, onDelete, onMoveUp, onMoveDown } = this.props
+    const { label, initialValue, onDelete, onMoveUp, onMoveDown } = this.props
     const { value } = this.state
     const canRevert = (!_.isNil(initialValue) && initialValue !== value)
 
@@ -353,13 +353,18 @@ class Input extends PureComponent {
             </Dropdown.Item>
           }
           {canRevert &&
-            <Dropdown.Item onClick={() => setValue({ path, value: initialValue })}>
+            <Dropdown.Item onClick={this.handleRevert}>
               {t('revert')}
             </Dropdown.Item>
           }
         </DropdownButton>
       </InputGroup>
     )
+  }
+
+  handleRevert = () => {
+    const { onChange, initialValue, path } = this.props
+    onChange({ path, value: initialValue })
   }
 
   handleChange = (event) => {
@@ -371,7 +376,7 @@ class Input extends PureComponent {
 
   setValue = _.debounce((...args) => {
     const { onChange } = this.props
-    onChange && onChange(...args)
+    onChange(...args)
     this.editing = false
   }, 700, { trailing: true })
 }
