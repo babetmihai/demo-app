@@ -34,7 +34,7 @@ class FormComponent extends PureComponent {
   }
 
   render() {
-    const { value } = this.props
+    const { value, initialValue } = this.props
     return (
       <Page
         loading={!value}
@@ -44,6 +44,7 @@ class FormComponent extends PureComponent {
           onChange={setValue}
           label="editor"
           value={value}
+          initialValue={initialValue}
         />
       </Page>
     )
@@ -60,7 +61,7 @@ function Resolver(props) {
   }
 }
 
-function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDown, ...props }) {
+function ObjectValue({ label, path, value, initialValue, onDelete, onChange, onMoveUp, onMoveDown, ...props }) {
   const keys = Object.keys(value)
   const [adding, setAdding] = React.useState()
   const [newKey, setNewKey] = React.useState('')
@@ -97,6 +98,11 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
               {t('add.key')}
             </Dropdown.Item>
           }
+          {(!_.isNil(initialValue) && initialValue !== value) &&
+            <Dropdown.Item onClick={() => setValue({ path, value: initialValue })}>
+              {t('revert')}
+            </Dropdown.Item>
+          }
         </DropdownButton>
       </Card.Header>
       <div className={styles.content}>
@@ -106,7 +112,8 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
             key={id}
             label={id}
             path={join(path, id)}
-            value={value[id]}
+            value={_.get(value, id)}
+            initialValue={_.get(initialValue, id)}
             onDelete={() => setValue({ path: join(path, id) })}
             onMoveUp={index > 0
               ? () => setValue({
@@ -185,7 +192,7 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
   )
 }
 
-function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDown, ...props }) {
+function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDown, initialValue, ...props }) {
   const [adding, setAdding] = React.useState()
   return (
     <Card className={styles.arrayValue}>
@@ -219,6 +226,11 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
               {t('add.item')}
             </Dropdown.Item>
           }
+          {(!_.isNil(initialValue) && initialValue !== value) &&
+            <Dropdown.Item onClick={() => setValue({ path, value: initialValue })}>
+              {t('revert')}
+            </Dropdown.Item>
+          }
         </DropdownButton>
       </Card.Header>
       <div className={styles.content}>
@@ -228,6 +240,7 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
             key={index}
             path={join(path, index)}
             value={item}
+            initialValue={_.get(value, index)}
             onMoveUp={index > 0
               ? () => setValue({ path, value: swap(value, index, index - 1) })
               : undefined
@@ -298,7 +311,7 @@ class Input extends PureComponent {
   }
 
   render() {
-    const { label, onDelete, onMoveUp, onMoveDown } = this.props
+    const { label, initialValue, path, onDelete, onMoveUp, onMoveDown } = this.props
     const { value } = this.state
 
     return (
@@ -333,6 +346,11 @@ class Input extends PureComponent {
           {onMoveDown &&
             <Dropdown.Item onClick={onMoveDown}>
               {t('move.down')}
+            </Dropdown.Item>
+          }
+          {(!_.isNil(initialValue) && initialValue !== value) &&
+            <Dropdown.Item onClick={() => setValue({ path, value: initialValue })}>
+              {t('revert')}
             </Dropdown.Item>
           }
         </DropdownButton>

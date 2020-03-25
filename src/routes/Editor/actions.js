@@ -33,7 +33,10 @@ const defaultValue = {
   }
 }
 
-export const initEditor = () => actions.set('editor.value', defaultValue)
+export const initEditor = () => {
+  actions.set('editor.value', defaultValue)
+  actions.set('editor.initialValue', defaultValue)
+}
 export const selectEditor = () => actions.get('editor', {})
 
 export const setValue = ({ path, value }) => {
