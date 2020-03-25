@@ -17,10 +17,18 @@
   >.objectHeader {
     padding: 0;
     display: flex;
-    align-items: center;
+
+    >.info {
+      padding: .1rem .5rem;
+      border-right: 1px solid rgba(0, 0, 0, 0.125);
+    }
 
     >.label {
       flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 .5rem;
+      border-right: 1px solid rgba(0, 0, 0, 0.125);
     }
 
     >.dropdown {
@@ -48,10 +56,18 @@
   >.arrayHeader {
     padding: 0;
     display: flex;
-    align-items: center;
+
+    >.info {
+      padding: .1rem .5rem;
+      border-right: 1px solid rgba(0, 0, 0, 0.125);
+    }
 
     >.label {
       flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 .5rem;
+      border-right: 1px solid rgba(0, 0, 0, 0.125);
     }
 
     >.dropdown {
