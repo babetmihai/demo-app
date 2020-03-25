@@ -74,3 +74,23 @@
     }
   }
 }
+
+
+.iconBtn {
+  padding: 0rem .5rem;
+  color: $primary;
+}
+
+.newKey {
+  width: auto;
+  align-self: flex-start;
+  .keyInput {
+    flex: none;
+    width: 10rem;
+  }
+
+  .keySelect {
+    flex: none;
+    width: 6rem;
+  }
+}

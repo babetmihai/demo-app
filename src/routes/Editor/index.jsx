@@ -50,6 +50,8 @@ function Resolver(props) {
 
 function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDown, ...props }) {
   const keys = Object.keys(value)
+  const [adding, setAdding] = React.useState()
+  const [newKey, setNewKey] = React.useState('')
 
   return (
     <Card className={styles.objectValue}>
@@ -64,9 +66,7 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
           variant="light"
         >
           {onDelete &&
-            <Dropdown.Item
-              onClick={onDelete}
-            >
+            <Dropdown.Item onClick={onDelete}>
               {t('delete')}
             </Dropdown.Item>
           }
@@ -78,6 +78,11 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
           {onMoveDown &&
             <Dropdown.Item onClick={onMoveDown}>
               {t('move.down')}
+            </Dropdown.Item>
+          }
+          {!adding &&
+            <Dropdown.Item onClick={() => setAdding('key')}>
+              {t('add.key')}
             </Dropdown.Item>
           }
           <Dropdown.Item href="#">Something else here</Dropdown.Item>
@@ -119,6 +124,41 @@ function ObjectValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveD
             onChange={onChange}
           />
         ))}
+        {adding &&
+          <InputGroup className={styles.newKey}>
+            <Form.Control
+              autoFocus
+              value={newKey}
+              className={styles.keyInput}
+              onChange={(event) => setNewKey(event.target.value)}
+            />
+            <Form.Control
+              as="select"
+              value={adding}
+              className={styles.keySelect}
+              onChange={(event) => setAdding(event.target.value)}
+            >
+              <option value="key">{'key'}</option>
+              <option value="object">{'object'}</option>
+              <option value="array">{'array'}</option>
+            </Form.Control>
+
+            <InputGroup.Append>
+              <Button
+                variant="outline-info"
+                className={styles.iconBtn}
+              >
+                <i>cancel</i>
+              </Button>
+              <Button
+                variant="outline-info"
+                className={styles.iconBtn}
+              >
+                <i>save</i>
+              </Button>
+            </InputGroup.Append>
+          </InputGroup>
+        }
       </div>
     </Card>
   )
