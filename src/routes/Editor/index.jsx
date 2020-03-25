@@ -74,6 +74,17 @@ function ObjectValue({ label, path, value }) {
       <Card.Header className={styles.objectHeader}>
         <i>folder_open</i>
         <div className={styles.label}>{label}</div>
+        <DropdownButton
+          className={styles.dropdown}
+          title=""
+          variant="outline-primary"
+        >
+          <Dropdown.Item href="#">Action</Dropdown.Item>
+          <Dropdown.Item href="#">Another action</Dropdown.Item>
+          <Dropdown.Item href="#">Something else here</Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item href="#">Separated link</Dropdown.Item>
+        </DropdownButton>
       </Card.Header>
       <div className={styles.content}>
         {Object.keys(value).map((id) => (
@@ -97,7 +108,6 @@ function ArrayValue({ label, path, value }) {
         <div className={styles.label}>{label}</div>
         <DropdownButton
           className={styles.dropdown}
-          as={InputGroup.Append}
           title=""
           variant="outline-primary"
         >
