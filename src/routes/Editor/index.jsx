@@ -60,9 +60,10 @@ function ObjectValue({ label, path, value, initialValue, onDelete, onChange, onM
   const [newKey, setNewKey] = React.useState('')
   const canRevert = !_.isNil(initialValue) && initialValue !== value
   const options = [
-    onDelete && ( <Dropdown.Item key="delete" onClick={onDelete}>
-      {t('delete')}
-    </Dropdown.Item>
+    onDelete && (
+      <Dropdown.Item key="delete" onClick={onDelete}>
+        {t('delete')}
+      </Dropdown.Item>
     ),
     onMoveUp && (
       <Dropdown.Item key="move.up" onClick={onMoveUp}>
@@ -157,7 +158,6 @@ function ObjectValue({ label, path, value, initialValue, onDelete, onChange, onM
                 </option>
               ))}
             </Form.Control>
-
             <InputGroup.Append>
               <Button
                 variant="outline-info"
@@ -193,9 +193,10 @@ function ArrayValue({ label, path, value, onDelete, onChange, onMoveUp, onMoveDo
   const [adding, setAdding] = React.useState()
   const canRevert = !_.isNil(initialValue) && initialValue !== value
   const options = [
-    onDelete && ( <Dropdown.Item key="delete" onClick={onDelete}>
-      {t('delete')}
-    </Dropdown.Item>
+    onDelete && (
+      <Dropdown.Item key="delete" onClick={onDelete}>
+        {t('delete')}
+      </Dropdown.Item>
     ),
     onMoveUp && (
       <Dropdown.Item key="move.up" onClick={onMoveUp}>
