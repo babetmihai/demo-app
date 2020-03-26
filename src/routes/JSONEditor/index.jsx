@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { selectEditor, initEditor, setValue } from './actions'
 import Page from 'layout/Page'
+import Header from './Header'
 import Editor from './Editor'
 import styles from './index.module.scss'
-import Toolbar from './Toolbar'
 
 class JSONEditor extends PureComponent {
 
@@ -18,15 +18,18 @@ class JSONEditor extends PureComponent {
     return (
       <Page
         loading={!value}
-        className={styles.editor}
+        className={styles.jsonEditor}
       >
-        <Toolbar value={value} />
-        <Editor
-          onChange={setValue}
-          label="editor"
-          value={value}
-          initialValue={initialValue}
-        />
+        <Header value={value} />
+        <div className={styles.content}>
+          <Editor
+            onChange={setValue}
+            label="editor"
+            value={value}
+            initialValue={initialValue}
+          />
+        </div>
+
       </Page>
     )
   }

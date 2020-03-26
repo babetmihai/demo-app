@@ -1,5 +1,7 @@
 import actions from 'store/actions'
 import _ from 'lodash'
+import { setAlertError } from 'core/alerts'
+import { t } from 'core/intl'
 
 export const swap = (array, i, j) => {
   const newArray = [...array]
@@ -81,7 +83,7 @@ export const downloadJSON = async ({ value, name }) => {
       document.body.removeChild(element)
     }
   } catch (error) {
-    console.log(error)
+    setAlertError(t(error.message))
   }
 }
 
@@ -90,10 +92,10 @@ export const uploadJSON = async ({ file }) => {
     const reader = new FileReader()
     reader.onload = (event) => {
       const json = JSON.parse(event.target.result)
-      actions.set('editor.value', json)
+      actions.set('editor', { value: json, initialValue: json })
     }
     reader.readAsText(file)
-  } catch (err) {
-    console.error(err)
+  } catch (error) {
+    setAlertError(t(error.message))
   }
 }
