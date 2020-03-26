@@ -32,9 +32,9 @@ const routes = [
     icon: 'view_list'
   },
   {
-    id: 'editor',
+    id: 'json.editor',
     path: '/editor',
-    component: lazy(() => import('routes/Editor')),
+    component: lazy(() => import('routes/JSONEditor')),
     icon: 'edit'
   }
 ]

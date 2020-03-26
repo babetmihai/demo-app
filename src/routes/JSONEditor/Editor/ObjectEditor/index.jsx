@@ -10,21 +10,23 @@ import {
   Dropdown,
   Button
 } from 'react-bootstrap'
-import Resolver from '../../JSONEditor'
+import Resolver from '../../Editor'
 import styles from './index.module.scss'
 
-export default function ArrayEditor({
+export default function ObjectEditor({
   label,
   path,
   value,
+  initialValue,
   onDelete,
   onChange,
   onMoveUp,
   onMoveDown,
-  initialValue,
   ...props
 }) {
+  const keys = Object.keys(value)
   const [adding, setAdding] = React.useState()
+  const [newKey, setNewKey] = React.useState('')
   const canRevert = !_.isNil(initialValue) && initialValue !== value
   const options = [
     onDelete && (
@@ -55,10 +57,10 @@ export default function ArrayEditor({
   ].filter(Boolean)
 
   return (
-    <Card className={styles.arrayEditor}>
+    <Card className={styles.objectEditor}>
       <Card.Header className={styles.header}>
         <Button variant="light" className={styles.info}>
-          <i>format_list_bulleted</i>
+          <i>folder_open</i>
         </Button>
         <div className={styles.label}>{label}</div>
         <DropdownButton
@@ -71,30 +73,50 @@ export default function ArrayEditor({
         </DropdownButton>
       </Card.Header>
       <div className={styles.content}>
-        {value.map((item, index) => (
+        {keys.map((id, index) => (
           <Resolver
             {...props}
-            key={index}
-            path={join(path, index)}
-            value={item}
-            initialValue={_.get(initialValue, index)}
+            key={id}
+            label={id}
+            path={join(path, id)}
+            value={_.get(value, id)}
+            initialValue={_.get(initialValue, id)}
+            onDelete={() => onChange({ path: join(path, id) })}
             onMoveUp={index > 0
-              ? () => onChange({ path, value: swap(value, index, index - 1) })
+              ? () => onChange({
+                path,
+                value: swap(keys, index, index - 1)
+                  .reduce((acc, key) => {
+                    acc[key] = value[key]
+                    return acc
+                  }, {})
+              })
               : undefined
             }
-            onMoveDown={(index < value.length - 1)
-              ? () => onChange({ path, value: swap(value, index, index + 1) })
+            onMoveDown={(index < keys.length - 1)
+              ? () => onChange({
+                path,
+                value: swap(keys, index + 1, index)
+                  .reduce((acc, key) => {
+                    acc[key] = value[key]
+                    return acc
+                  }, {})
+              })
               : undefined
             }
             onChange={onChange}
-            onDelete={() => onChange({ path, value: value.filter((i) => i !== item) })}
           />
         ))}
         {adding &&
           <InputGroup className={styles.newKey}>
             <Form.Control
-              as="select"
               ref={(node) => node && setTimeout(() => node.focus())}
+              value={newKey}
+              className={styles.keyInput}
+              onChange={(event) => setNewKey(event.target.value)}
+            />
+            <Form.Control
+              as="select"
               value={adding}
               className={styles.keySelect}
               onChange={(event) => setAdding(event.target.value)}
@@ -109,13 +131,18 @@ export default function ArrayEditor({
               <Button
                 variant="outline-info"
                 className={styles.iconBtn}
-                onClick={() => setAdding(undefined)}
+                onClick={() => {
+                  setNewKey('')
+                  setAdding(undefined)
+                }}
               >
                 <i>cancel</i>
               </Button>
               <Button
+                disabled={!newKey}
                 onClick={() => {
-                  onChange({ path, value: [...value, VALUES[adding]] })
+                  onChange({ path: join(path, newKey), value: VALUES[adding] })
+                  setNewKey('')
                   setAdding(undefined)
                 }}
                 variant="outline-info"
@@ -130,4 +157,3 @@ export default function ArrayEditor({
     </Card>
   )
 }
-

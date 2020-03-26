@@ -2,10 +2,10 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { selectEditor, initEditor, setValue } from './actions'
 import Page from 'layout/Page'
-import JSONEditor from './JSONEditor'
+import Editor from './Editor'
 import styles from './index.module.scss'
 
-class FormComponent extends PureComponent {
+class JSONEditor extends PureComponent {
 
   componentDidMount() {
     const { value } = this.props
@@ -19,7 +19,7 @@ class FormComponent extends PureComponent {
         loading={!value}
         className={styles.editor}
       >
-        <JSONEditor
+        <Editor
           onChange={setValue}
           label="editor"
           value={value}
@@ -30,4 +30,4 @@ class FormComponent extends PureComponent {
   }
 }
 
-export default connect(selectEditor)(FormComponent)
+export default connect(selectEditor)(JSONEditor)

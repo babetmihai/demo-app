@@ -5,7 +5,7 @@ import ObjectEditor from './ObjectEditor'
 import ArrayEditor from './ArrayEditor'
 import InputEditor from './InputEditor'
 
-export default function JSONEditor(props) {
+export default function Editor(props) {
   const { value } = props
   switch (true) {
     case (_.isPlainObject(value)): return <ObjectEditor {...props} />
