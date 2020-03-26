@@ -1,0 +1,15 @@
+@import 'constants.module.scss';
+
+.inputEditor {
+  align-self: flex-start;
+  display: flex;
+  margin: .5rem;
+  width: auto;
+  >.dropdown {
+    >button {
+      color: $primary;
+    }
+  }
+}
+
+

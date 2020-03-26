@@ -12,6 +12,18 @@ export const join = (...args) => args
   .filter(arg => !_.isNil(arg))
   .join('.')
 
+export const TYPES = {
+  INPUT: 'input',
+  OBJECT: 'object',
+  ARRAY: 'array'
+}
+
+export const VALUES = {
+  [TYPES.INPUT]: '',
+  [TYPES.OBJECT]: {},
+  [TYPES.ARRAY]: []
+}
+
 const defaultValue = {
   name: 'M34234',
   other: [{ other: {} }],
