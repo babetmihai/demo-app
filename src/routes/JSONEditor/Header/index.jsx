@@ -6,7 +6,7 @@ import {
 import { Button } from 'react-bootstrap'
 import styles from './index.module.scss'
 
-export default function Toolbar({ value }) {
+export default function Toolbar({ title, value }) {
   return (
     <Fragment>
       <div className={styles.header}>
@@ -23,7 +23,7 @@ export default function Toolbar({ value }) {
         <Button
           variant="light"
           className={styles.button}
-          onClick={() => downloadJSON({ name: 'editor', value })}
+          onClick={() => downloadJSON({ name: title, value })}
         >
           <i>get_app</i>
 

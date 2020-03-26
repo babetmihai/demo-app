@@ -66,17 +66,16 @@ export const setValue = ({ path, value }) => {
 
 export const downloadJSON = async ({ value, name }) => {
   try {
-    const fileName = `${name}.json`
     const blob = new Blob([JSON.stringify(value, null, 2)], {
       type: 'application/json',
-      name: fileName.toString()
+      name: name.toString()
     })
     if (typeof navigator !== 'undefined' && navigator.msSaveOrOpenBlob) {
       window.navigator.msSaveOrOpenBlob(blob, value)
     } else {
       const element = document.createElement('a')
       element.setAttribute('href', URL.createObjectURL(blob))
-      element.setAttribute('download', fileName)
+      element.setAttribute('download', name)
       element.style.display = 'none'
       document.body.appendChild(element)
       element.click()
@@ -94,7 +93,7 @@ export const uploadJSON = async ({ file }) => {
     reader.onload = (event) => {
       try {
         const json = JSON.parse(event.target.result)
-        actions.set('editor', { value: json, initialValue: json })
+        actions.set('editor', { value: json, initialValue: json, title: file.name })
         setAlertSuccess(t('file.uploaded.succesfully'))
       } catch (error) {
         setAlertError(t(error.message))

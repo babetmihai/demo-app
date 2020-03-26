@@ -5,6 +5,7 @@ import Page from 'layout/Page'
 import Header from './Header'
 import Editor from './Editor'
 import styles from './index.module.scss'
+import { t } from 'core/intl'
 
 class JSONEditor extends PureComponent {
 
@@ -14,17 +15,18 @@ class JSONEditor extends PureComponent {
   }
 
   render() {
-    const { value, initialValue } = this.props
+    const { value, initialValue, title } = this.props
+    const editorTitle = title || `${t('editor')}.json`
     return (
       <Page
         loading={!value}
         className={styles.jsonEditor}
       >
-        <Header value={value} />
+        <Header value={value} title={editorTitle} />
         <div className={styles.content}>
           <Editor
             onChange={setValue}
-            label="editor"
+            label={editorTitle}
             value={value}
             initialValue={initialValue}
           />
