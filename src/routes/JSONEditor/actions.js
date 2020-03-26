@@ -1,6 +1,6 @@
 import actions from 'store/actions'
 import _ from 'lodash'
-import { setAlertError } from 'core/alerts'
+import { setAlertError, setAlertSuccess } from 'core/alerts'
 import { t } from 'core/intl'
 
 export const swap = (array, i, j) => {
@@ -88,12 +88,14 @@ export const downloadJSON = async ({ value, name }) => {
 }
 
 export const uploadJSON = async ({ file }) => {
+  if (!file) return
   try {
     const reader = new FileReader()
     reader.onload = (event) => {
       try {
         const json = JSON.parse(event.target.result)
         actions.set('editor', { value: json, initialValue: json })
+        setAlertSuccess(t('file.uploaded.succesfully'))
       } catch (error) {
         setAlertError(t(error.message))
       }
