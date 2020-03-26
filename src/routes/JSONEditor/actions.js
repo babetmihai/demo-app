@@ -61,3 +61,39 @@ export const selectEditor = () => actions.get('editor', {})
 export const setValue = ({ path, value }) => {
   actions.set(join('editor.value', path), value)
 }
+
+export const downloadJSON = async ({ value, name }) => {
+  try {
+    const fileName = `${name}.json`
+    const blob = new Blob([JSON.stringify(value, null, 2)], {
+      type: 'application/json',
+      name: fileName.toString()
+    })
+    if (typeof navigator !== 'undefined' && navigator.msSaveOrOpenBlob) {
+      window.navigator.msSaveOrOpenBlob(blob, value)
+    } else {
+      const element = document.createElement('a')
+      element.setAttribute('href', URL.createObjectURL(blob))
+      element.setAttribute('download', fileName)
+      element.style.display = 'none'
+      document.body.appendChild(element)
+      element.click()
+      document.body.removeChild(element)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const uploadJSON = async ({ file }) => {
+  try {
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      const json = JSON.parse(event.target.result)
+      actions.set('editor.value', json)
+    }
+    reader.readAsText(file)
+  } catch (err) {
+    console.error(err)
+  }
+}

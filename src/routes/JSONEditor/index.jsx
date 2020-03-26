@@ -4,6 +4,7 @@ import { selectEditor, initEditor, setValue } from './actions'
 import Page from 'layout/Page'
 import Editor from './Editor'
 import styles from './index.module.scss'
+import Toolbar from './Toolbar'
 
 class JSONEditor extends PureComponent {
 
@@ -19,6 +20,7 @@ class JSONEditor extends PureComponent {
         loading={!value}
         className={styles.editor}
       >
+        <Toolbar value={value} />
         <Editor
           onChange={setValue}
           label="editor"
