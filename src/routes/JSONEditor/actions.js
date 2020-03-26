@@ -91,8 +91,15 @@ export const uploadJSON = async ({ file }) => {
   try {
     const reader = new FileReader()
     reader.onload = (event) => {
-      const json = JSON.parse(event.target.result)
-      actions.set('editor', { value: json, initialValue: json })
+      try {
+        const json = JSON.parse(event.target.result)
+        actions.set('editor', { value: json, initialValue: json })
+      } catch (error) {
+        setAlertError(t(error.message))
+      }
+    }
+    reader.onerror = (error) => {
+      setAlertError(t(error.message))
     }
     reader.readAsText(file)
   } catch (error) {
