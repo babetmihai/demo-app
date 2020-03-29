@@ -36,7 +36,7 @@ export default class InputEditor extends PureComponent {
   }
 
   render() {
-    const { label, initialValue, onDelete } = this.props
+    const { label, initialValue, onDelete, onDuplicate } = this.props
     const { value, editing } = this.state
     const canRevert = (!_.isNil(initialValue) && initialValue !== value)
     const options = [
@@ -48,6 +48,11 @@ export default class InputEditor extends PureComponent {
       canRevert && (
         <Dropdown.Item key="revert" onClick={this.handleRevert}>
           {t('revert')}
+        </Dropdown.Item>
+      ),
+      onDuplicate && (
+        <Dropdown.Item key="duplicate" onClick={onDuplicate}>
+          {t('copy.item')}
         </Dropdown.Item>
       )
     ].filter(Boolean)

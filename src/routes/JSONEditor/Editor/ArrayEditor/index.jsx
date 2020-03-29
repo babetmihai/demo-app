@@ -21,6 +21,7 @@ export default function ArrayEditor({
   value,
   onDelete,
   onChange,
+  onDuplicate,
   initialValue,
   ...props
 }) {
@@ -34,12 +35,17 @@ export default function ArrayEditor({
     ),
     !adding && (
       <Dropdown.Item key="add.value" onClick={() => setAdding(TYPES.INPUT)}>
-        {t('add.value')}
+        {t('add.item')}
       </Dropdown.Item>
     ),
     canRevert && (
       <Dropdown.Item key="revert" onClick={() => onChange({ path, value: initialValue })}>
         {t('revert')}
+      </Dropdown.Item>
+    ),
+    onDuplicate && (
+      <Dropdown.Item key="duplicate" onClick={onDuplicate}>
+        {t('copy.item')}
       </Dropdown.Item>
     )
   ].filter(Boolean)
@@ -91,6 +97,7 @@ export default function ArrayEditor({
             initialValue={_.get(initialValue, index)}
             onChange={onChange}
             onDelete={() => onChange({ path, value: value.filter((i) => i !== item) })}
+            onDuplicate={() => onChange({ path, value: [...value, _.cloneDeep(value[index])] })}
           />
         ))}
         {adding &&

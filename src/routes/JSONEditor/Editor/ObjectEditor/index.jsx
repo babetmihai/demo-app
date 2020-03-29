@@ -22,6 +22,7 @@ export default function ObjectEditor({
   initialValue,
   onDelete,
   onChange,
+  onDuplicate,
   ...props
 }) {
   const keys = Object.keys(value)
@@ -42,6 +43,11 @@ export default function ObjectEditor({
     canRevert && (
       <Dropdown.Item key="revert" onClick={() => onChange({ path, value: initialValue })}>
         {t('revert')}
+      </Dropdown.Item>
+    ),
+    onDuplicate && (
+      <Dropdown.Item key="duplicate" onClick={onDuplicate}>
+        {t('copy,item')}
       </Dropdown.Item>
     )
   ].filter(Boolean)
