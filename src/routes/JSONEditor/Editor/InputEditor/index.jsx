@@ -52,7 +52,7 @@ export default class InputEditor extends PureComponent {
       ),
       onDuplicate && (
         <Dropdown.Item key="duplicate" onClick={onDuplicate}>
-          {t('copy.item')}
+          {t('copy')}
         </Dropdown.Item>
       )
     ].filter(Boolean)

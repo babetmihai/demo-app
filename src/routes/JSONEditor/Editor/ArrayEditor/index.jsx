@@ -45,7 +45,7 @@ export default function ArrayEditor({
     ),
     onDuplicate && (
       <Dropdown.Item key="duplicate" onClick={onDuplicate}>
-        {t('copy.item')}
+        {t('copy')}
       </Dropdown.Item>
     )
   ].filter(Boolean)

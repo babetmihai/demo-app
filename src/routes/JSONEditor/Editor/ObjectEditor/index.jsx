@@ -37,7 +37,7 @@ export default function ObjectEditor({
     ),
     !adding && (
       <Dropdown.Item key="add.item" onClick={() => setAdding(TYPES.INPUT)}>
-        {t('add.item')}
+        {t('add.key')}
       </Dropdown.Item>
     ),
     canRevert && (
@@ -47,7 +47,7 @@ export default function ObjectEditor({
     ),
     onDuplicate && (
       <Dropdown.Item key="duplicate" onClick={onDuplicate}>
-        {t('copy.item')}
+        {t('copy')}
       </Dropdown.Item>
     )
   ].filter(Boolean)
@@ -104,12 +104,6 @@ export default function ObjectEditor({
         {adding &&
           <InputGroup className={styles.newKey}>
             <Form.Control
-              ref={(node) => node && setTimeout(() => node.focus())}
-              value={newKey}
-              className={styles.keyInput}
-              onChange={(event) => setNewKey(event.target.value)}
-            />
-            <Form.Control
               as="select"
               value={adding}
               className={styles.keySelect}
@@ -121,6 +115,13 @@ export default function ObjectEditor({
                 </option>
               ))}
             </Form.Control>
+            <Form.Control
+              ref={(node) => node && setTimeout(() => node.focus())}
+              value={newKey}
+              placeholder={t('enter.key')}
+              className={styles.keyInput}
+              onChange={(event) => setNewKey(event.target.value)}
+            />
             <InputGroup.Append>
               <Button
                 variant="outline-info"

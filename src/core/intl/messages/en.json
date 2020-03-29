@@ -13,5 +13,6 @@
   "html": "HTML",
   "sass": "SCSS",
   "object.description": "This is a JSON Object. You may add new key/value pairs or edit existing ones.",
-  "array.description": "This is a JSON Array. You may add new values or edit existing ones."
+  "array.description": "This is a JSON Array. You may add new values or edit existing ones.",
+  "enter.key": "Enter key..."
 }
