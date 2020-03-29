@@ -47,7 +47,7 @@ export default function ObjectEditor({
     ),
     onDuplicate && (
       <Dropdown.Item key="duplicate" onClick={onDuplicate}>
-        {t('copy,item')}
+        {t('copy.item')}
       </Dropdown.Item>
     )
   ].filter(Boolean)
