@@ -1,0 +1,28 @@
+@import 'constants.module.scss';
+
+.page {
+  flex: auto;
+  flex-shrink: 0;
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+
+  width: 96%;
+  margin: 1.5rem 0;
+  max-width: $lg;
+
+  background: #fff;
+  border: 1px solid $border;
+  border-radius: 4px;
+}
+
+.loading {
+  background: inherit;
+  border: none;
+  justify-content: center;
+  align-items: center;
+  i {
+    font-size: 4rem;
+    animation: spin 1000ms infinite linear;
+  }
+}

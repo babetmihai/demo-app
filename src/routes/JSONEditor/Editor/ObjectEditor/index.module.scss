@@ -1,0 +1,66 @@
+@import 'constants.module.scss';
+
+.objectEditor {
+  display: flex;
+  flex-direction: column;
+  margin: .5rem;
+  min-width: 12rem;
+  min-height: 6rem;
+}
+
+
+.header {
+  padding: 0;
+  display: flex;
+
+  .info {
+    padding: 0rem .5rem;
+    border-radius: 0;
+    border-top-left-radius: .25rem;
+    
+  }
+
+  .label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 .5rem;
+    border-right: 1px solid rgba(0, 0, 0, 0.125);
+    border-left: 1px solid rgba(0, 0, 0, 0.125);
+  }
+
+  .dropdown {
+    >button {
+      border-radius: 0;
+      border-top-right-radius: .25rem;
+    }
+  }
+}
+
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: .5rem;
+}
+
+.iconBtn {
+  padding: 0rem .5rem;
+  color: $primary;
+}
+
+.newKey {
+  margin: .5rem;
+  width: auto;
+  align-self: flex-start;
+  .keyInput {
+    flex: none;
+    width: 10rem;
+  }
+
+  .keySelect {
+    flex: none;
+    width: 7rem;
+  }
+}

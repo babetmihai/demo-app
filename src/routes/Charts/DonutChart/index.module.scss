@@ -1,0 +1,24 @@
+@import 'constants.module.scss';
+
+.donutChart {
+  flex: 1;
+}
+
+.pie {
+  position: relative;
+}
+
+.arc {
+  opacity: .8;
+  &:active {
+    opacity: 1;
+  }
+}
+
+.path {
+  cursor: pointer;
+}
+
+.circle {
+  position: relative;
+}

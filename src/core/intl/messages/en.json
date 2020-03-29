@@ -1,0 +1,17 @@
+{
+  "react.description": "I have been building React web applications and reusable components for most of my career.",
+  "nodejs.description": "I do back end development using Node.js, mostly for creation of REST APIs with the Express framework.",
+  "redux.description": "Redux is a great state management tool I use for most of my projects. I am also familiar with redux middleware such as redux-thunk and redux-saga.",
+  "d3.description": "D3 is a great tool I use for building data visualization components. I mostly use D3 for data manipulation and React for rendering, or in some cases I use D3 for both.",
+  "sass.description": "SCSS is a CSS extension I use for it's extra features such as variables, functions, mixins. It enables me to better organize my css styes and more easily implement complex features.",
+  "firebase.description": "Firebase if a great platform I use for fast development and deployement of web applications. It comes with a powerfull database, authentication, cloud functions and hosting.",
+  "javascript.description": "I use javascript for most of my projects, whether it is a Web Application, a REST API or an automation script.",
+  "css.description": "I understand and use most CSS concepts and features such as selectors, specificity, positioning, css modules, flexbox, css grid and animations.",
+  "html.description": "I am familiar with markup languages such as HTML5, JSX, SVG.",
+  "nodejs": "Node.js",
+  "css": "CSS",
+  "html": "HTML",
+  "sass": "SCSS",
+  "object.description": "This is a JSON Object. You may add new key/value pairs or edit existing ones.",
+  "array.description": "This is a JSON Array. You may add new values or edit existing ones."
+}

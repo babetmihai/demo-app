@@ -1,0 +1,52 @@
+@import "constants.module.scss";
+
+.label {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 2px;
+  cursor: grab;
+  overflow: hidden;
+}
+
+.resize {
+  z-index: 1;
+  position: relative;
+  cursor: ew-resize;
+  width: 25px;
+}
+
+.drag {
+  z-index: 1;
+  position: relative;
+  flex: auto;
+  width: 25px;
+}
+
+.contents {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.dragged {
+  z-index: 10;
+  cursor: grabbing;
+}
+
+.nodrop {
+  cursor: no-drop;
+}

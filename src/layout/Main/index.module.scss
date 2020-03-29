@@ -1,0 +1,52 @@
+@import 'constants.module.scss';
+
+.main {
+  flex: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  order: 1;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  order: 2;
+  ::-webkit-scrollbar {
+    width: .35rem;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px $border;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: $border;
+    border-radius: 10px;
+  }
+}
+
+.footer {
+  flex: none;
+  height: .1rem;
+}
+
+.rightContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+
+
+@media only screen and (max-width: $md) {
+  .content {
+    flex-direction: column;
+  }
+}

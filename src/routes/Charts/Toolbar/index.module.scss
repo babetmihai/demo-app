@@ -1,0 +1,13 @@
+
+.toolbar {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: .5rem .2rem;
+
+  button {
+    flex: none;
+    margin: .2rem;
+  }
+}

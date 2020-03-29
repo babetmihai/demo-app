@@ -1,0 +1,78 @@
+@import 'constants.module.scss';
+@import "~bootstrap/scss/bootstrap";
+
+
+html {
+  overflow: hidden;
+  font-weight: 400;
+  @include fluid-type(font-size, $sm, $lg, 10px, 16px);
+  font-family: Lato;
+}
+
+body {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+#root {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: $background;
+}
+
+#app-loader {
+  animation: spin 500ms infinite linear;
+  visibility: visible;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  min-height: 0;
+}
+
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0 .35em;
+}
+
+i {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 1.35rem;  /* Preferred icon size */
+  display: inline-block;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+.spin {
+  animation: spin 2*$std-transition linear;
+}

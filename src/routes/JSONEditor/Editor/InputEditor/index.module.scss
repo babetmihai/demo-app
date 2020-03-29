@@ -1,0 +1,32 @@
+@import 'constants.module.scss';
+
+.inputEditor {
+  align-self: flex-start;
+  display: flex;
+  margin: .5rem;
+  width: auto;
+  .dropdown {
+    >button {
+      color: $primary;
+    }
+  }
+
+  .input {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .small {
+    width: 9rem;
+  }
+
+  .medium {
+    width: 13rem;
+  }
+
+  .large {
+    width: 20rem;
+  }
+}
+
