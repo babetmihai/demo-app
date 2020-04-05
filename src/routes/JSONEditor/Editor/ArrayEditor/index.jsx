@@ -93,7 +93,6 @@ export default function ArrayEditor({
             key={index}
             path={join(path, index)}
             value={item}
-            label={index}
             initialValue={_.get(initialValue, index)}
             onChange={onChange}
             onDelete={() => onChange({ path, value: value.filter((i) => i !== item) })}

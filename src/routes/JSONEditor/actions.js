@@ -42,6 +42,31 @@ const defaultValue = {
   }
 }
 
+export const setSearch = _.debounce((search) => {
+  actions.set('editor.search', search)
+}, 700, { trailing: true })
+
+export const filterValue = ({ search, key = '', value }) => {
+  switch (true) {
+    case (!_.isNumber(key) && key.toString().includes(search)): return value
+    case (_.isArray(value)): {
+      return value
+        .map((item, index) => filterValue({ search, key: index, value: item }))
+        .filter((item) => !_.isEmpty(item))
+    }
+    case (_.isPlainObject(value)): {
+      return Object.entries(value).reduce((acc, [itemKey, item]) => {
+        const newValue = filterValue({ search, key: itemKey, value: item })
+        if (!_.isEmpty(newValue) || _.isString(newValue)) acc[itemKey] = newValue
+        return acc
+      }, {})
+    }
+    default: {
+      return undefined
+    }
+  }
+}
+
 export const initEditor = ({ value = defaultValue, title } = {}) => {
   actions.set('editor', {
     value,

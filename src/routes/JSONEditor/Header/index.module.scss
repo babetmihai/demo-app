@@ -4,7 +4,7 @@
   display: flex;
   margin: .5rem .8rem;
   margin-bottom: 0;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .button {
@@ -17,4 +17,16 @@
   visibility: hidden;
   height: 0;
   width: 0;;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.filter {
+  margin: .2rem;
+  margin-left: .5rem;
+  width: 15rem;
 }

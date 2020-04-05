@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { selectEditor, initEditor, setValue } from './actions'
+import { selectEditor, initEditor, setValue, filterValue } from './actions'
 import Page from 'layout/Page'
 import Header from './Header'
 import Editor from './Editor'
@@ -15,7 +15,7 @@ class JSONEditor extends PureComponent {
   }
 
   render() {
-    const { value, initialValue, title } = this.props
+    const { value, initialValue, search = '', title } = this.props
     const editorTitle = title || `${t('editor')}.json`
 
     return (
@@ -25,13 +25,14 @@ class JSONEditor extends PureComponent {
       >
         <Header
           value={value}
+          search={search}
           title={editorTitle}
         />
         <div className={styles.content}>
           <Editor
             onChange={setValue}
             label={editorTitle}
-            value={value}
+            value={filterValue({ search, value })}
             initialValue={initialValue}
           />
         </div>
