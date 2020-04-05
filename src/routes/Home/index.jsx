@@ -60,7 +60,7 @@ export default function Home({ routes }) {
           as="a"
           target="_blank"
           rel="noreferrer noopener"
-          href="https://github.com/babetmihai/babet-mihai"
+          href="https://github.com/babetmihai/demo-app"
         >
           <GitHubIcon />
         </Button>
