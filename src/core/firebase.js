@@ -4,12 +4,13 @@ import 'firebase/auth'
 import 'firebase/storage'
 
 firebase.initializeApp({
-  apiKey: process.env.REACT_APP_apiKey,
-  authDomain: process.env.REACT_APP_authDomain,
-  databaseURL: process.env.REACT_APP_databaseURL,
-  projectId: process.env.REACT_APP_projectId,
-  messagingSenderId: process.env.REACT_APP_messagingSenderId,
-  storageBucket: process.env.REACT_APP_storageBucket
-})
+  apiKey: "AIzaSyBlz1clTHLvNYkX3DdLuS3NahX2-kJookQ",
+  authDomain: "babet-mihai.firebaseapp.com",
+  databaseURL: "https://babet-mihai.firebaseio.com",
+  projectId: "babet-mihai",
+  storageBucket: "babet-mihai.appspot.com",
+  messagingSenderId: "897097348817",
+  appId: "1:897097348817:web:907218278da2fff61077f0"
+};)
 
 export default firebase
